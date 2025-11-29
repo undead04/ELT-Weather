@@ -1,0 +1,364 @@
+[2025-11-26 19:28:00] ===== START WEATHER CRAWL 2024 =====
+[2025-11-26 19:28:00] Loaded 63 cities from city_2025-11-26.parquet
+[2025-11-26 19:28:00] Crawling range: 2024-01-01 → 2024-01-31
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:01] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:02] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-26 19:28:05] ✔ Saved: /mnt/d/Data Engineer/Bài tập/ELT Weather/data/raw/weather/weather_2025-11-26.json
+[2025-11-26 19:28:05] ⏱ Total time: 4 seconds
+[2025-11-26 19:28:05] ===== FINISHED WEATHER CRAWL 2024 =====
+
+[2025-11-29 14:28:07] ===== START WEATHER CRAWL 2025-11-28 14:28:07.814025 =====
+[2025-11-29 14:28:08] Loaded 63 cities from city_2025-11-26.parquet
+[2025-11-29 14:28:08] Crawling range: 2025-11-28 14:28:07.814025
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.0283334,105.854041 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 22.7792173,104.959767 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 22.7426936,106.1060926 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 22.2728552,105.8564601 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 22.3382057,105.0715846 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 22.3069302,104.1829592 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.6546566,103.2168632 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 22.2921668,103.1798662 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.2276769,104.1575944 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.8091042,104.5182832 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.7090533,105.2576439 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.9610968,105.8440789 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.8487579,106.6140692 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.1718046,107.2012742 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.3740092,106.4663176 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.3007538,105.1349604 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.3647247,105.5836703 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 21.3282166,106.4625257 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.9602884,106.3604393 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.8623278,106.6799266 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.6065846,106.2843471 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.4031348,106.5941615 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.5340294,105.9810248 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 19.9952624,106.485807 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 20.2867258,106.1000359 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 19.9781573,105.4816107 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 19.1976001,105.060676 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 18.3504832,105.7623047 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 17.5157162,106.6225405 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 17.2166964,106.9548246 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 16.4639321,107.5863388 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 16.068,108.212 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 15.5587908,108.109299 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 14.9953739,108.691729 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 14.1086959,109.1145897 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 13.1998999,109.2390033 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 12.2980751,108.9950386 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 11.4639176,109.1316501 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.4398768,108.5137429 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 14.6699512,108.0288466 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 14.0201373,108.6354524 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 12.8741856,108.7979302 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 12.2807367,107.742636 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 11.6614957,108.1335279 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 11.8000378,106.9151381 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 11.0800527,106.2610531 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 11.1826157,106.6738179 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 11.4285446,107.1624245 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.7836158,107.539162 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.7755254,106.7021047 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.7119482,106.1257781 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.3647275,106.3207017 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.8837431,106.7340154 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.5815192,106.5307116 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.046765,106.2947443 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.425183,105.9271362 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.3188672,105.0432488 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.7667502,104.4726437 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 10.0362046,105.7872656 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.7881262,105.6390398 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.3203771,106.1059371 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 8.8961366,105.6969598 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:08] ⚠ Error attempt 1/3 for 9.0180177,105.0869724 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.0283334,105.854041 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 22.7792173,104.959767 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 22.7426936,106.1060926 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 22.2728552,105.8564601 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 22.3382057,105.0715846 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 22.3069302,104.1829592 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.6546566,103.2168632 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 22.2921668,103.1798662 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.2276769,104.1575944 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.8091042,104.5182832 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.7090533,105.2576439 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.9610968,105.8440789 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.8487579,106.6140692 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.1718046,107.2012742 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.3740092,106.4663176 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.3007538,105.1349604 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.3647247,105.5836703 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 21.3282166,106.4625257 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.9602884,106.3604393 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.8623278,106.6799266 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.6065846,106.2843471 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.4031348,106.5941615 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.5340294,105.9810248 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 19.9952624,106.485807 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 20.2867258,106.1000359 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 19.9781573,105.4816107 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 19.1976001,105.060676 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 18.3504832,105.7623047 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 17.5157162,106.6225405 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 17.2166964,106.9548246 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 16.4639321,107.5863388 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 16.068,108.212 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 15.5587908,108.109299 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 14.9953739,108.691729 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 14.1086959,109.1145897 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 13.1998999,109.2390033 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 12.2980751,108.9950386 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 11.4639176,109.1316501 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.4398768,108.5137429 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 14.6699512,108.0288466 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 14.0201373,108.6354524 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 12.8741856,108.7979302 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 12.2807367,107.742636 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 11.6614957,108.1335279 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 11.8000378,106.9151381 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 11.0800527,106.2610531 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 11.1826157,106.6738179 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 11.4285446,107.1624245 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.7836158,107.539162 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.7755254,106.7021047 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.7119482,106.1257781 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.3647275,106.3207017 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.8837431,106.7340154 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.5815192,106.5307116 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.046765,106.2947443 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.425183,105.9271362 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.3188672,105.0432488 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.7667502,104.4726437 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 10.0362046,105.7872656 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.7881262,105.6390398 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.3203771,106.1059371 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 8.8961366,105.6969598 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:09] ⚠ Error attempt 2/3 for 9.0180177,105.0869724 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.0283334,105.854041 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 22.7792173,104.959767 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 22.7426936,106.1060926 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 22.2728552,105.8564601 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 22.3382057,105.0715846 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 22.3069302,104.1829592 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.6546566,103.2168632 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 22.2921668,103.1798662 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.2276769,104.1575944 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.8091042,104.5182832 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.7090533,105.2576439 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.9610968,105.8440789 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.8487579,106.6140692 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.1718046,107.2012742 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.3740092,106.4663176 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.3007538,105.1349604 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.3647247,105.5836703 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 21.3282166,106.4625257 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.9602884,106.3604393 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.8623278,106.6799266 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.6065846,106.2843471 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.4031348,106.5941615 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.5340294,105.9810248 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 19.9952624,106.485807 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 20.2867258,106.1000359 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 19.9781573,105.4816107 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 19.1976001,105.060676 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 18.3504832,105.7623047 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 17.5157162,106.6225405 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 17.2166964,106.9548246 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 16.4639321,107.5863388 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 16.068,108.212 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 15.5587908,108.109299 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 14.9953739,108.691729 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 14.1086959,109.1145897 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 13.1998999,109.2390033 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 12.2980751,108.9950386 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 11.4639176,109.1316501 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.4398768,108.5137429 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 14.6699512,108.0288466 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 14.0201373,108.6354524 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 12.8741856,108.7979302 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 12.2807367,107.742636 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 11.6614957,108.1335279 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 11.8000378,106.9151381 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 11.0800527,106.2610531 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 11.1826157,106.6738179 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 11.4285446,107.1624245 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.7836158,107.539162 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.7755254,106.7021047 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.7119482,106.1257781 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.3647275,106.3207017 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.8837431,106.7340154 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.5815192,106.5307116 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.046765,106.2947443 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.425183,105.9271362 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.3188672,105.0432488 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.7667502,104.4726437 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 10.0362046,105.7872656 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.7881262,105.6390398 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.3203771,106.1059371 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 8.8961366,105.6969598 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:10] ⚠ Error attempt 3/3 for 9.0180177,105.0869724 → Invalid variable type: value should be str, int or float, got datetime.datetime(2025, 11, 28, 14, 28, 7, 814025) of type <class 'datetime.datetime'>
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.0283334,105.854041
+[2025-11-29 14:28:11] ❌ Failed after retries: 22.7792173,104.959767
+[2025-11-29 14:28:11] ❌ Failed after retries: 22.7426936,106.1060926
+[2025-11-29 14:28:11] ❌ Failed after retries: 22.2728552,105.8564601
+[2025-11-29 14:28:11] ❌ Failed after retries: 22.3382057,105.0715846
+[2025-11-29 14:28:11] ❌ Failed after retries: 22.3069302,104.1829592
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.6546566,103.2168632
+[2025-11-29 14:28:11] ❌ Failed after retries: 22.2921668,103.1798662
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.2276769,104.1575944
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.8091042,104.5182832
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.7090533,105.2576439
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.9610968,105.8440789
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.8487579,106.6140692
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.1718046,107.2012742
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.3740092,106.4663176
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.3007538,105.1349604
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.3647247,105.5836703
+[2025-11-29 14:28:11] ❌ Failed after retries: 21.3282166,106.4625257
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.9602884,106.3604393
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.8623278,106.6799266
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.6065846,106.2843471
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.4031348,106.5941615
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.5340294,105.9810248
+[2025-11-29 14:28:11] ❌ Failed after retries: 19.9952624,106.485807
+[2025-11-29 14:28:11] ❌ Failed after retries: 20.2867258,106.1000359
+[2025-11-29 14:28:11] ❌ Failed after retries: 19.9781573,105.4816107
+[2025-11-29 14:28:11] ❌ Failed after retries: 19.1976001,105.060676
+[2025-11-29 14:28:11] ❌ Failed after retries: 18.3504832,105.7623047
+[2025-11-29 14:28:11] ❌ Failed after retries: 17.5157162,106.6225405
+[2025-11-29 14:28:11] ❌ Failed after retries: 17.2166964,106.9548246
+[2025-11-29 14:28:11] ❌ Failed after retries: 16.4639321,107.5863388
+[2025-11-29 14:28:11] ❌ Failed after retries: 16.068,108.212
+[2025-11-29 14:28:11] ❌ Failed after retries: 15.5587908,108.109299
+[2025-11-29 14:28:11] ❌ Failed after retries: 14.9953739,108.691729
+[2025-11-29 14:28:11] ❌ Failed after retries: 14.1086959,109.1145897
+[2025-11-29 14:28:11] ❌ Failed after retries: 13.1998999,109.2390033
+[2025-11-29 14:28:11] ❌ Failed after retries: 12.2980751,108.9950386
+[2025-11-29 14:28:11] ❌ Failed after retries: 11.4639176,109.1316501
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.4398768,108.5137429
+[2025-11-29 14:28:11] ❌ Failed after retries: 14.6699512,108.0288466
+[2025-11-29 14:28:11] ❌ Failed after retries: 14.0201373,108.6354524
+[2025-11-29 14:28:11] ❌ Failed after retries: 12.8741856,108.7979302
+[2025-11-29 14:28:11] ❌ Failed after retries: 12.2807367,107.742636
+[2025-11-29 14:28:11] ❌ Failed after retries: 11.6614957,108.1335279
+[2025-11-29 14:28:11] ❌ Failed after retries: 11.8000378,106.9151381
+[2025-11-29 14:28:11] ❌ Failed after retries: 11.0800527,106.2610531
+[2025-11-29 14:28:11] ❌ Failed after retries: 11.1826157,106.6738179
+[2025-11-29 14:28:11] ❌ Failed after retries: 11.4285446,107.1624245
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.7836158,107.539162
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.7755254,106.7021047
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.7119482,106.1257781
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.3647275,106.3207017
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.8837431,106.7340154
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.5815192,106.5307116
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.046765,106.2947443
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.425183,105.9271362
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.3188672,105.0432488
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.7667502,104.4726437
+[2025-11-29 14:28:11] ❌ Failed after retries: 10.0362046,105.7872656
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.7881262,105.6390398
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.3203771,106.1059371
+[2025-11-29 14:28:11] ❌ Failed after retries: 8.8961366,105.6969598
+[2025-11-29 14:28:11] ❌ Failed after retries: 9.0180177,105.0869724
+[2025-11-29 14:28:11] ❌ Failed: Thành phố Hà Nội
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hà Giang
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Cao Bằng
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bắc Kạn
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Tuyên Quang
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Lào Cai
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Điện Biên
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Lai Châu
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Sơn La
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Yên Bái
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hòa Bình
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Thái Nguyên
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Lạng Sơn
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Quảng Ninh
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bắc Giang
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Phú Thọ
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Vĩnh Phúc
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bắc Ninh
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hải Dương
+[2025-11-29 14:28:11] ❌ Failed: Thành phố Hải Phòng
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hưng Yên
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Thái Bình
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hà Nam
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Nam Định
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Ninh Bình
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Thanh Hóa
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Nghệ An
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hà Tĩnh
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Quảng Bình
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Quảng Trị
+[2025-11-29 14:28:11] ❌ Failed: Huế
+[2025-11-29 14:28:11] ❌ Failed: Thành phố Đà Nẵng
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Quảng Nam
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Quảng Ngãi
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bình Định
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Phú Yên
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Khánh Hòa
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Ninh Thuận
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bình Thuận
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Kon Tum
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Gia Lai
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Đắk Lắk
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Đắk Nông
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Lâm Đồng
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bình Phước
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Tây Ninh
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bình Dương
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Đồng Nai
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bà Rịa - Vũng Tàu
+[2025-11-29 14:28:11] ❌ Failed: Thành phố Hồ Chí Minh
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Long An
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Tiền Giang
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bến Tre
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Trà Vinh
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Vĩnh Long
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Đồng Tháp
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh An Giang
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Kiên Giang
+[2025-11-29 14:28:11] ❌ Failed: Thành phố Cần Thơ
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Hậu Giang
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Sóc Trăng
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Bạc Liêu
+[2025-11-29 14:28:11] ❌ Failed: Tỉnh Cà Mau
+[2025-11-29 14:28:11] ✔ Saved: /mnt/d/Data Engineer/Bài tập/ELT Weather/data/raw/weather/weather_2025-11-29.json
+[2025-11-29 14:28:11] ⏱ Total time: 3 seconds
+[2025-11-29 14:28:11] ===== FINISHED WEATHER CRAWL 2025-11-28 14:28:07.814025 =====
+
+[2025-11-29 14:30:42] ===== START WEATHER CRAWL 2025-11-28 14:30:42.687844 =====
+[2025-11-29 14:30:42] Loaded 63 cities from city_2025-11-26.parquet
+[2025-11-29 14:30:42] Crawling range: 2025-11-28 14:30:42.687844
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:44] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:45] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:45] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:45] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:45] ⚠ API limit reached! Retry in 2s (attempt 1/3)
+[2025-11-29 14:30:48] ✔ Saved: /mnt/d/Data Engineer/Bài tập/ELT Weather/data/raw/weather/weather_2025-11-29.json
+[2025-11-29 14:30:48] ⏱ Total time: 5 seconds
+[2025-11-29 14:30:48] ===== FINISHED WEATHER CRAWL 2025-11-28 14:30:42.687844 =====
+
