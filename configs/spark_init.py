@@ -1,27 +1,23 @@
-
 from pyspark.sql import SparkSession
+from delta import configure_spark_with_delta_pip
+from utils.config import SPARK_APP_NAME, DELTA_DIR
 
-def create_spark(app_name="WeatherETL"):
-    spark = (
-        SparkSession.builder
-        .appName(app_name)
-        .master("local[*]")
-        .config("spark.driver.memory", "4g")
-        .config("spark.sql.shuffle.partitions", "8")
-        .config("spark.sql.execution.arrow.pyspark.enabled", "true")
-        .config("spark.sql.adaptive.enabled", "true")   # bật AQE
-        .config("spark.hadoop.fs.s3a.endpoint", "http://localhost:9000") 
-        .config("spark.hadoop.fs.s3a.access.key", "minioadmin") 
-        .config("spark.hadoop.fs.s3a.secret.key", "minioadmin") 
-        .config("spark.hadoop.fs.s3a.path.style.access", "true") 
-        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-        .config("spark.jars.packages",
-        "org.apache.hadoop:hadoop-aws:3.3.6,com.amazonaws:aws-java-sdk-bundle:1.12.262")
 
-        .getOrCreate()
+def create_spark(app_name: str = None, warehouse_dir: str = None) -> SparkSession:
+    """Create a SparkSession configured with Delta Lake support.
+
+    This uses delta-spark helper configure_spark_with_delta_pip so the same
+    environment can work with pip-installed delta-spark.
+    """
+    app_name = app_name or SPARK_APP_NAME
+    warehouse_dir = warehouse_dir or str(DELTA_DIR)
+
+    builder = (
+        SparkSession.builder.appName(app_name)
+        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+        .config("spark.sql.warehouse.dir", warehouse_dir)
     )
-    return spark
 
-if __name__ == "__main__":
-    spark = create_spark()
-    print(spark.version)
+    spark = configure_spark_with_delta_pip(builder).getOrCreate()
+    return spark

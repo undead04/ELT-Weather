@@ -1,13 +1,11 @@
 # elt_scripts/transform/transform_weather.py
-from datetime import datetime
 from pathlib import Path
 import duckdb
-import pandas as pd
-import pandas as pd
-import numpy as np
+from utils.config import PROCESSED_DIR, SQL_DB_PATH
+from utils.logging import get_logger
 
 def get_last_file(path: str) -> Path:
-    path:Path = Path.cwd() / path
+    path:Path = PROCESSED_DIR / Path(path)
     files = list(path.parent.glob(path.name))
     if not files:
         return None
@@ -15,12 +13,13 @@ def get_last_file(path: str) -> Path:
     return latest_file
 
 def load_aq():
-    input_path = get_last_file("data/processed/aq/aq_*.parquet")
+    input_path = get_last_file("aq/aq_*.parquet")
+    logger = get_logger(__name__, domain_file="aq.log")
     if input_path is None:
-        print("No processed aq data file found.")
+        logger.error("No processed aq data file found.")
         return
-    database_path = Path.cwd() / "sql/weather.duckdb"
-    conn = duckdb.connect(str(database_path))
+    
+    conn = duckdb.connect(str(SQL_DB_PATH))
     conn.execute(f"""
         INSERT INTO fact_air_quality(date_id, time_id,city_id,aqi,pm25,pm10,
                  no2,so2,o3,co,co2)
@@ -42,6 +41,9 @@ def load_aq():
             """)
     # Close DuckDB connection
     conn.close()
-    print(f"Saved fact_air_quality to dim")
+    logger.info("Saved fact_air_quality to dim")
 if __name__ =="__main__":
-    load_aq()
+        from utils.logging import setup_logging
+
+        setup_logging()
+        load_aq()

@@ -3,7 +3,8 @@ from importlib.metadata import files
 from datetime import datetime
 import pandas as pd 
 from pathlib import Path
-BASE_DIR = Path.cwd()
+from utils.config import RAW_DIR, PROCESSED_DIR
+from utils.logging import get_logger
 # breakpoint cho PM2.5 (µg/m³)
 pm25_bp = [
     (0, 35, 0, 50),
@@ -87,7 +88,7 @@ def calc_aqi(pm25, pm10, co, so2, no2,o3):
     return max(filter(lambda x: x is not None, sub_indices))
 
 def get_last_file():
-    path = BASE_DIR /  "data" / "raw" / "aq" / "aq_*.json"
+    path = RAW_DIR / "aq" / "aq_*.json"
     files = list(path.parent.glob(path.name))
     if not files:
         return None
@@ -95,9 +96,11 @@ def get_last_file():
     return latest_file
 
 def transform_aq():
+    logger = get_logger(__name__, domain_file="aq.log")
     folder_path = get_last_file()
     if folder_path is None:
-        print("No aq data folder found.")
+        logger.error("No aq data folder found.")
+        return
         return
     
     cols = ["co","co2","no2","so2","o3","pm10","pm25"]
@@ -123,9 +126,12 @@ def transform_aq():
         axis=1
     )
     date_str = datetime.now().strftime("%Y-%m-%d")
-    out_parquet_path = BASE_DIR / f"data/processed/aq/aq_{date_str}.parquet"
+    out_parquet_path = PROCESSED_DIR / "aq" / f"aq_{date_str}.parquet"
     out_parquet_path.parent.mkdir(parents=True, exist_ok=True)
-    df_exploded.to_parquet(out_parquet_path,engine="pyarrow", index=False)
-    print(f"Saved aq parquet to {out_parquet_path}")
+    df_exploded.to_parquet(out_parquet_path, engine="pyarrow", index=False)
+    logger.info("Saved aq parquet to %s", out_parquet_path)
 if __name__ == '__main__':
+    from utils.logging import setup_logging
+
+    setup_logging()
     transform_aq()

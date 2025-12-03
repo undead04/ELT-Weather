@@ -1,7 +1,7 @@
 import duckdb
 from pathlib import Path
-# Đường dẫn tới file DuckDB
-database_path = Path.cwd() / "sql" / "weather.duckdb"
+from utils.config import SQL_DB_PATH
+database_path = SQL_DB_PATH
 
 # Kết nối đến DuckDB, tạo hoặc mở cơ sở dữ liệu
 conn = duckdb.connect(database=database_path)

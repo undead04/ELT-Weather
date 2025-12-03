@@ -1,6 +1,9 @@
 from datetime import datetime,timedelta
 import pandas as pd
 from pathlib import Path
+from utils.logging import get_logger
+from utils.logging import setup_logging
+from utils.config import PROCESSED_DIR
 def generate_data_date():
     datas = []
     # Lấy năm trước
@@ -25,14 +28,15 @@ def generate_data_date():
         current_date += delta
         i += 1
      # ---- 4. Lưu file ----
-    BASE_DIR = Path.cwd()
     date_str = datetime.now().strftime("%Y%m%d")
-    output_path = BASE_DIR / "data/processed/date" / f"date_{date_str}.parquet"
+    output_path = PROCESSED_DIR / "date" / f"date_{date_str}.parquet"
+    logger = get_logger(__name__, domain_file="date.log")
     df = pd.DataFrame(datas)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_parquet(output_path, engine="fastparquet", index=False)
-    print(f"Loaded dim_date into Parquet at {output_path}")
+    df.to_parquet(output_path, engine="pyarrow", index=False)
+    logger.info("Loaded dim_date into Parquet at %s", output_path)
 
 
 if __name__ == "__main__":
+    setup_logging()
     generate_data_date()

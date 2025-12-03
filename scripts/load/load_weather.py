@@ -1,9 +1,10 @@
 from pathlib import Path
 import pandas as pd
 import duckdb
-BASE_DIR = Path.cwd()
+from utils.config import PROCESSED_DIR, SQL_DB_PATH
+from utils.logging import get_logger
 def get_last_file():
-    path = BASE_DIR /  "data" / "processed" / "weather" / "weather_*.parquet"
+    path = PROCESSED_DIR / "weather" / "weather_*.parquet"
     files = list(path.parent.glob(path.name))
     if not files:
         return None
@@ -13,12 +14,12 @@ def get_last_file():
 def load_weather():
 
     input_path = get_last_file()
+    logger = get_logger(__name__, domain_file="weather.log")
     if input_path is None :
-        print("Không tìm thấy bất kỳ file data weather nào")
+        logger.error("Không tìm thấy bất kỳ file data weather nào")
         return
 
-    database_path = Path.cwd() / "sql/weather.duckdb"
-    conn = duckdb.connect(str(database_path))
+    conn = duckdb.connect(str(SQL_DB_PATH))
     conn.execute(f"""
         INSERT INTO fact_weather (
                  city_id,
@@ -52,6 +53,9 @@ def load_weather():
             """)
     # Close DuckDB connection
     conn.close()
-    print(f"Saved fact_weather to Parquet at {input_path}")
+    logger.info("Saved fact_weather to Parquet at %s", input_path)
 if __name__ == "__main__":
+    from utils.logging import setup_logging
+
+    setup_logging()
     load_weather()

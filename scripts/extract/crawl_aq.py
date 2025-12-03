@@ -2,27 +2,21 @@ import asyncio
 import aiohttp
 import pandas as pd
 from pathlib import Path
+from utils.config import RAW_DIR, PROCESSED_DIR, LOG_DIR
+from utils.logging import get_logger
 import json
 from datetime import datetime,timedelta
-from typing import List, Optional, Dict, Any
+from typing import Optional, Dict, Any
 
-BASE_DIR: Path = Path.cwd()
-LOG_DIR: Path = BASE_DIR / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
+logger = get_logger(__name__, domain_file="aq.log")
 
 # ---------- Logging ----------
 def log(message: str):
-
-    """Ghi log ra màn hình + file."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    full_msg = f"[{timestamp}] {message}"
-    print(full_msg)
-
-    with open(LOG_DIR / "aq_2024.log", "a", encoding="utf-8") as f:
-        f.write(full_msg + "\n")
+    logger.info(message)
 
 def get_last_file_parquet() -> Path:
-    data_dir = BASE_DIR / "data/processed/city"
+    data_dir = PROCESSED_DIR / "city"
     parquet_files = list(data_dir.glob("city_*.parquet"))
     if not parquet_files:
         return None
@@ -49,15 +43,14 @@ async def fetch_city_aq(
     for attempt in range(1, retries + 1):
         try:
             async with session.get(url, params=params, timeout=60) as response:
-
                 # ----- Check API limit -----
                 if response.status == 429:
-                    log(f"⚠ API limit reached! Retry in 2s (attempt {attempt}/3)")
+                    logger.warning(f"⚠ API limit reached! Retry in 2s (attempt {attempt}/3)")
                     await asyncio.sleep(2)
                     continue
 
                 if response.status != 200:
-                    log(f"❌ HTTP {response.status} for lat={lat}, lon={lon}")
+                    logger.error(f"❌ HTTP {response.status} for lat={lat}, lon={lon}")
                     return None
 
                 data = await response.json()
@@ -67,10 +60,10 @@ async def fetch_city_aq(
                 return city_data
 
         except Exception as e:
-            log(f"⚠ Error attempt {attempt}/3 for {lat},{lon} → {e}")
+            logger.warning(f"⚠ Error attempt {attempt}/3 for {lat},{lon} → {e}")
             await asyncio.sleep(1)
 
-    log(f"❌ Failed after retries: {lat},{lon}")
+    logger.error(f"❌ Failed after retries: {lat},{lon}")
     return None
 
 async def crawl_all_cities(cities:pd.DataFrame, start_date:str, end_date:str):
@@ -99,32 +92,35 @@ async def crawl_all_cities(cities:pd.DataFrame, start_date:str, end_date:str):
 def extract_aq():
     now_date = datetime.now()
     last_date = now_date - timedelta(1)
-    log(f"===== START AQ CRAWL {last_date} =====")
+    logger.info(f"===== START AQ CRAWL {last_date} =====")
     cities_path = get_last_file_parquet()
     if not cities_path:
-        log("❌ No city parquet found.")
+        logger.error("❌ No city parquet found.")
         return
     
     cities = pd.read_parquet(cities_path)
-    log(f"Loaded {len(cities)} cities from {cities_path.name}")
+    logger.info(f"Loaded {len(cities)} cities from {cities_path.name}")
 
     start_date = last_date.strftime("%Y-%m-%d")
     end_date = last_date.strftime("%Y-%m-%d")
-    log(f"Crawling {last_date}")
+    logger.info(f"Crawling {last_date}")
     start_time = datetime.now()
 
     all_data = asyncio.run(crawl_all_cities(cities, start_date, end_date))
     date_str = datetime.now().strftime("%Y-%m-%d")
-    output_path = BASE_DIR / f"data/raw/aq/aq_{date_str}.json"
+    output_path = RAW_DIR / "aq" / f"aq_{date_str}.json"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=4)
     
     duration = (datetime.now() - start_time).seconds
-    log(f"✔ Saved: {output_path}")
-    log(f"⏱ Total time: {duration} seconds")
-    log(f"===== FINISHED AQ CRAWL {last_date} =====\n")
+    logger.info(f"✔ Saved: {output_path}")
+    logger.info(f"⏱ Total time: {duration} seconds")
+    logger.info(f"===== FINISHED AQ CRAWL {last_date} =====\n")
         
 
 if __name__ == "__main__":
+    from utils.logging import setup_logging
+
+    setup_logging()
     extract_aq()

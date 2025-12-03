@@ -1,5 +1,7 @@
 import pandas as pd
 from pathlib import Path
+from utils.config import PROCESSED_DIR, SQL_DB_PATH
+from utils.logging import get_logger
 import duckdb
 
 def get_last_parquet_file(directory: Path):
@@ -10,11 +12,11 @@ def get_last_parquet_file(directory: Path):
 
 def load_time_db():
     # Path đến DuckDB
-    database_path = Path.cwd() / "sql/weather.duckdb"
-    conn = duckdb.connect(str(database_path))
+    logger = get_logger(__name__, domain_file="time.log")
+    conn = duckdb.connect(str(SQL_DB_PATH))
 
     # Lấy parquet mới nhất
-    parquet_path = get_last_parquet_file(Path.cwd() / "data/processed/time")
+    parquet_path = get_last_parquet_file(PROCESSED_DIR / "time")
 
     # Load parquet trực tiếp vào DuckDB
     conn.execute(f"""
@@ -28,8 +30,11 @@ def load_time_db():
         ON CONFLICT (hour) DO NOTHING
             """)
 
-    print("dim_time loaded into DuckDB successfully.")
+    logger.info("dim_time loaded into DuckDB successfully.")
     conn.close()
 
 if __name__ == "__main__":
+    from utils.logging import setup_logging
+
+    setup_logging()
     load_time_db()

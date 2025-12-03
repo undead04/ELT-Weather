@@ -1,9 +1,8 @@
 
 from pathlib import Path
-import duckdb
-from datetime import datetime
-import pandas as pd 
-BASE_DIR = Path.cwd()
+from utils.config import PROCESSED_DIR, SQL_DB_PATH
+from utils.logging import get_logger
+import duckdb 
 
 def get_last_parquet_file(directory: Path):
     parquet_files = list(directory.glob("date_*.parquet"))
@@ -13,11 +12,11 @@ def get_last_parquet_file(directory: Path):
 
 def load_date_DW():
     # Path đến DuckDB
-    database_path = Path.cwd() / "sql/weather.duckdb"
-    conn = duckdb.connect(str(database_path))
+    logger = get_logger(__name__, domain_file="date.log")
+    conn = duckdb.connect(str(SQL_DB_PATH))
 
     # Lấy parquet mới nhất
-    parquet_path = get_last_parquet_file(Path.cwd() / "data/processed/date")
+    parquet_path = get_last_parquet_file(PROCESSED_DIR / "date")
 
     # Load parquet trực tiếp vào DuckDB
     conn.execute(f"""
@@ -33,8 +32,11 @@ def load_date_DW():
         FROM '{parquet_path.as_posix()}'
         ON CONFLICT (full_date) DO NOTHING ;
             """)
-    print("dim_date loaded into DuckDB successfully.")    
+    logger.info("dim_date loaded into DuckDB successfully.")    
     conn.close()
 
 if __name__ == "__main__":
+    from utils.logging import setup_logging
+
+    setup_logging()
     load_date_DW()

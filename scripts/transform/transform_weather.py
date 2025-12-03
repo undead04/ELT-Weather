@@ -2,11 +2,11 @@
 from datetime import datetime
 import pandas as pd 
 from pathlib import Path
-
-BASE_DIR = Path.cwd()
+from utils.config import RAW_DIR, PROCESSED_DIR
+from utils.logging import get_logger
 
 def get_last_file():
-    path = BASE_DIR /  "data" / "raw" / "weather" / "weather_*.json"
+    path = RAW_DIR / "weather" / "weather_*.json"
     files = list(path.parent.glob(path.name))
     if not files:
         return None
@@ -16,9 +16,11 @@ def get_last_file():
 def transform_weather():
     # Lấy file dữ liệu thời tiết mới nhất
     input_path = get_last_file()
+    logger = get_logger(__name__, domain_file="weather.log")
     if input_path is None:
-        print("No weather data folder found.")
+        logger.error("No weather data folder found.")
         return
+    
     # sữ lí dữ liệu
     list_cols = [
             "temperature", "humidity", "wind_speed",
@@ -43,10 +45,13 @@ def transform_weather():
 
     # Lưu thông tin vào parquet
     date_str = datetime.now().strftime("%Y-%m-%d")
-    out_parquet_path = BASE_DIR / f"data/processed/weather/weather_{date_str}.parquet"
+    out_parquet_path = PROCESSED_DIR / "weather" / f"weather_{date_str}.parquet"
     out_parquet_path.parent.mkdir(parents=True, exist_ok=True)
-    df_exploded.to_parquet(out_parquet_path,engine="pyarrow", index=False)
-    print(f"Saved weather records to {out_parquet_path}")
+    df_exploded.to_parquet(out_parquet_path, engine="pyarrow", index=False)
+    logger.info("Saved weather records to %s", out_parquet_path)
     
 if __name__ == '__main__':
+    from utils.logging import setup_logging
+
+    setup_logging()
     transform_weather()

@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+# Cài đặt OS packages nếu cần
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. Tạo thư mục làm việc
+WORKDIR /opt/etl
+
+# Copy requirements
+COPY requirements.txt /opt/etl/requirements.txt
+
+RUN pip install --no-cache-dir -r /opt/etl/requirements.txt
+
+ENV PYTHONPATH=/opt/etl
+

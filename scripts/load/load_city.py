@@ -1,9 +1,11 @@
 import duckdb
 from pathlib import Path
+from utils.config import PROCESSED_DIR, SQL_DB_PATH
+from utils.logging import get_logger
 import pandas as pd
 import datetime
 def get_last_file():
-    path = Path.cwd()  / "data" / "processed" / "city" / "city_*.parquet"
+    path = PROCESSED_DIR / "city" / "city_*.parquet"
     files = list(path.parent.glob(path.name))
     if not files:
         return None
@@ -12,12 +14,13 @@ def get_last_file():
 
 def load_city():
     input_path = get_last_file()
+    logger = get_logger(__name__, domain_file="city.log")
     if input_path is None:
-        print("No processed city data file found.")
+        logger.error("No processed city data file found.")
         return
+    
     # Lưu vào DuckDB
-    database_path = Path.cwd() / "sql/weather.duckdb"
-    conn = duckdb.connect(str(database_path))
+    conn = duckdb.connect(str(SQL_DB_PATH))
     conn.execute(f"""
         INSERT INTO DIM_CITY (city_id, city_name, lat, lon, country)
         SELECT 
@@ -31,7 +34,10 @@ def load_city():
             """)
     # Close DuckDB connection
     conn.close()
-    print(f"Saved dim_city to Parquet at {input_path}")
+    logger.info("Saved dim_city to Parquet at %s", input_path)
 
 if __name__ == "__main__":
+    from utils.logging import setup_logging
+
+    setup_logging()
     load_city()

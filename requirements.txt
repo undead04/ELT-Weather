@@ -1,0 +1,10 @@
+
+pydantic==2.12.4
+python-dotenv==1.2.1
+pandas
+pyarrow==22.0.0
+duckdb
+pathlib
+aiohttp
+
+
