@@ -1,0 +1,7 @@
+pandas
+pyarrow
+aiohttp
+boto3
+s3fs
+psycopg2-binary
+apache-airflow-providers-apache-spark

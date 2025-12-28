@@ -1,0 +1,47 @@
+FROM apache/airflow:2.10.4-python3.11
+
+USER root
+WORKDIR /opt/airflow
+
+# =========================
+# 1. OS packages & Java 17
+# =========================
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    openjdk-17-jdk \
+    netcat-openbsd \
+    procps && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# =========================
+# 2. Cài đặt Spark Binaries (Phần thiếu quan trọng nhất)
+# =========================
+ENV SPARK_VERSION=3.5.7
+ENV HADOOP_VERSION=3
+# Tải Spark, giải nén và đổi tên thư mục thành /opt/spark
+RUN curl -fL "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" -o /tmp/spark.tgz && \
+    tar -xzf /tmp/spark.tgz -C /opt/ && \
+    mv /opt/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /opt/spark && \
+    rm /tmp/spark.tgz
+
+# =========================
+# 3. Thiết lập biến môi trường
+# =========================
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV SPARK_HOME=/opt/spark
+ENV PATH="${SPARK_HOME}/bin:${PATH}"
+ENV PYTHONPATH=/opt/airflow
+
+# =========================
+# 4. Python dependencies
+# =========================
+COPY requirements.txt /requirements.txt
+
+USER airflow
+
+# Cài đặt từ requirements.txt với constraint
+ENV CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-2.10.4/constraints-3.11.txt"
+RUN pip install --no-cache-dir -r /requirements.txt --constraint "${CONSTRAINT_URL}"

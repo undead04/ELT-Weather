@@ -1,0 +1,10 @@
+.devcontainer
+configs
+logs/
+.env
+.qodo
+notebooks/
+spark/jars/
+airflow/elt_app/scripts/extract/__pycache__
+airflow/elt_app/scripts/transform/__pycache__
+airflow/elt_app/scripts/load/__pycache__
