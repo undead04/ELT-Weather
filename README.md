@@ -50,7 +50,7 @@ ELT Weather/
    ```
 
 2. **Cấu hình biến môi trường:**
-   Tạo file `.env` (nếu chưa có) và cập nhật các thông tin cần thiết:
+   Copy file `.envexample` thành `.env` và cập nhật các thông tin cần thiết:
    ```env
    # AWS / S3 Config
    AWS_ACCESS_KEY_ID=minioadmin
@@ -62,10 +62,18 @@ ELT Weather/
    AIRFLOW_UID=50000
    POSTGRES_USER=airflow
    POSTGRES_PASSWORD=airflow
-   POSTGRES_DB=warehouse
+   POSTGRES_DB=weather_dw
    ```
 
-3. **Khởi chạy hệ thống với Docker Compose:**
+3. **Tải các thư viện phụ thuộc (JARs)**
+   Dự án sử dụng Spark với các thư viện mở rộng để kết nối S3, PostgreSQL và Delta Lake. Các thư viện này không được lưu trong git để giảm dung lượng.
+   Chạy script sau để tự động tải về:
+   ```bash
+   bash setup.sh
+   ```
+   *Script này sẽ tải các file .jar cần thiết vào thư mục `spark/jars/`.*
+
+4. **Khởi chạy hệ thống với Docker Compose:**
    ```bash
    docker compose up -d --build
    ```
@@ -75,9 +83,28 @@ ELT Weather/
    - `airflow-scheduler`: Bộ lập lịch của Airflow.
    - `spark-master` & `spark-worker`: Cluster Spark.
 
-4. **Truy cập giao diện quản trị:**
+5. **Truy cập giao diện quản trị:**
    - **Airflow UI**: http://localhost:8080 (Tài khoản mặc định: `admin`/`admin` - xem trong `docker-compose.yml` phần `airflow-init`).
    - **Spark Master UI**: http://localhost:8081.
+
+6. **Cấu hình Connections (Airflow UI):**
+   Vào Airflow UI -> **Admin** -> **Connections** để thiết lập các kết nối:
+
+   **a. Kết nối PostgreSQL (Data Warehouse):**
+   *(Nếu chưa được tự động cấu hình qua biến môi trường)*
+   - **Conn Id**: `postgres_default`
+   - **Conn Type**: `Postgres`
+   - **Host**: `postgres-db`
+   - **Schema**: `weather_dw`
+   - **Login**: `airflow`
+   - **Password**: `airflow`
+   - **Port**: `5432`
+
+   **b. Kết nối Spark:**
+   - **Conn Id**: `spark_default`
+   - **Conn Type**: `Spark`
+   - **Host**: `spark://spark-master`
+   - **Port**: `7077`
 
 ## 🏃‍♂️ Sử dụng Pipeline
 
