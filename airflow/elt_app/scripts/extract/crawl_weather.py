@@ -98,10 +98,9 @@ async def crawl_all_cities(cities: pd.DataFrame, start_date: str, end_date: str)
 
 
 # ---------- EXTRACT MAIN ----------
-def extract_weather():
-    now_day = datetime.now()
-    last_day = now_day - timedelta(days=1)
-    logger.info(f"===== START WEATHER CRAWL {last_day} =====")
+def extract_weather(**context):
+    target_date = context['ds']
+    logger.info(f"===== START WEATHER CRAWL {target_date} =====")
 
     cities_path = get_last_file_s3("staging/city/")
     if not cities_path:
@@ -112,16 +111,16 @@ def extract_weather():
     logger.info(f"Loaded {len(cities)} cities from {cities_path}")
 
 
-    logger.info(f"Crawling range: {last_day}")
+    logger.info(f"Crawling range: {target_date}")
 
     start_time = datetime.now()
-    start_date = last_day.strftime("%Y-%m-%d")
-    end_date = last_day.strftime("%Y-%m-%d")
+    start_date = target_date.strftime("%Y-%m-%d")
+    end_date = target_date.strftime("%Y-%m-%d")
     
     all_data = asyncio.run(crawl_all_cities(cities, start_date,end_date))
 
     # Save JSON
-    date_str = datetime.now().strftime("%Y-%m-%d")
+    date_str = target_date.strftime("%Y-%m-%d")
     prefix = "raw/weather/"
 
     s3 = boto3.client(
@@ -134,7 +133,7 @@ def extract_weather():
     # Convert JSON to bytes
     data_bytes = json.dumps(all_data, ensure_ascii=False, indent=4).encode("utf-8")
 
-    key = f"{prefix}weather_{date_str}.json"
+    key = f"{prefix}weather_{target_date}.json"
 
     s3.put_object(
         Bucket=BUCKET_NAME,
@@ -146,7 +145,7 @@ def extract_weather():
     duration = (datetime.now() - start_time).seconds
     logger.info(f"✔ Saved: S3: s3://%s/%s", BUCKET_NAME, key)
     logger.info(f"⏱ Total time: {duration} seconds")
-    logger.info(f"===== FINISHED WEATHER CRAWL {last_day} =====\n")
+    logger.info(f"===== FINISHED WEATHER CRAWL {target_date} =====\n")
 
 
 if __name__ == "__main__":

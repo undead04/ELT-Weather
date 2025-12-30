@@ -81,10 +81,9 @@ async def crawl_all_cities(cities:pd.DataFrame, start_date:str, end_date:str):
 
     return all_data
 
-def extract_aq():
-    now_date = datetime.now()
-    last_date = now_date - timedelta(1)
-    logger.info(f"===== START AQ CRAWL {last_date} =====")
+def extract_aq(**context):
+    target_date = context['ds']
+    logger.info(f"===== START AQ CRAWL {target_date} =====")
     cities_file = get_last_file_s3('staging/city/')
     if not cities_file:
         logger.error("❌ No city parquet found.")
@@ -93,13 +92,13 @@ def extract_aq():
     cities = pd.read_parquet(cities_file)
     logger.info(f"Loaded {len(cities)} cities from {cities_file}")
 
-    start_date = last_date.strftime("%Y-%m-%d")
-    end_date = last_date.strftime("%Y-%m-%d")
-    logger.info(f"Crawling {last_date}")
+    start_date = target_date.strftime("%Y-%m-%d")
+    end_date = target_date.strftime("%Y-%m-%d")
+    logger.info(f"Crawling {target_date}")
     start_time = datetime.now()
 
     all_data = asyncio.run(crawl_all_cities(cities, start_date, end_date))
-    date_str = datetime.now().strftime("%Y-%m-%d")
+    date_str = target_date.strftime("%Y-%m-%d")
     prefix = "raw/aq/"
 
     s3 = boto3.client(
@@ -124,7 +123,7 @@ def extract_aq():
     duration = (datetime.now() - start_time).seconds
     logger.info(f"✔ Saved: s3://{BUCKET_NAME}/{key}")
     logger.info(f"⏱ Total time: {duration} seconds")
-    logger.info(f"===== FINISHED AQ CRAWL {last_date} =====\n")
+    logger.info(f"===== FINISHED AQ CRAWL {target_date} =====\n")
         
 
 if __name__ == "__main__":

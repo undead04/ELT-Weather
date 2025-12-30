@@ -8,3 +8,7 @@ spark/jars/
 airflow/elt_app/scripts/extract/__pycache__
 airflow/elt_app/scripts/transform/__pycache__
 airflow/elt_app/scripts/load/__pycache__
+
+__pycache__/
+*.py[cod]
+*$py.class

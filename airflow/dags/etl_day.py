@@ -1,6 +1,6 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from datetime import datetime
 from datetime import timedelta
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
@@ -27,17 +27,22 @@ with DAG(
     description='ELT Weather & Air Quality – chạy hàng ngày với 2 nhánh song song',
     default_args=default_args,
     schedule_interval="@daily",
-    start_date=days_ago(1),
+    max_active_runs=1,
+    start_date=datetime(2025, 12, 1),
     catchup=False,
     tags=["elt", "pandas", "postgres"],
     template_searchpath=['/opt/airflow/'],
 ) as dag:
 
     t_crawl_weather = PythonOperator(
-        task_id="crawl_weather", python_callable=extract_weather
+        task_id="crawl_weather", 
+        python_callable=extract_weather,
+        provide_context=True
     )
     t_crawl_aq = PythonOperator(
-        task_id="crawl_aq", python_callable=extract_aq
+        task_id="crawl_aq", 
+        python_callable=extract_aq,
+        provide_context=True
     )
 
     t_transform_weather = SparkSubmitOperator(
