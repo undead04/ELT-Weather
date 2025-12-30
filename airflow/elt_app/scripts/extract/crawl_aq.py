@@ -92,13 +92,12 @@ def extract_aq(**context):
     cities = pd.read_parquet(cities_file)
     logger.info(f"Loaded {len(cities)} cities from {cities_file}")
 
-    start_date = target_date.strftime("%Y-%m-%d")
-    end_date = target_date.strftime("%Y-%m-%d")
+    start_date = target_date
+    end_date = target_date
     logger.info(f"Crawling {target_date}")
     start_time = datetime.now()
 
     all_data = asyncio.run(crawl_all_cities(cities, start_date, end_date))
-    date_str = target_date.strftime("%Y-%m-%d")
     prefix = "raw/aq/"
 
     s3 = boto3.client(
@@ -111,7 +110,7 @@ def extract_aq(**context):
     # Convert JSON to bytes
     data_bytes = json.dumps(all_data, ensure_ascii=False, indent=4).encode("utf-8")
 
-    key = f"{prefix}aq_{date_str}.json"
+    key = f"{prefix}aq_{target_date}.json"
 
     s3.put_object(
         Bucket=BUCKET_NAME,

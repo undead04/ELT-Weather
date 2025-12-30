@@ -114,13 +114,12 @@ def extract_weather(**context):
     logger.info(f"Crawling range: {target_date}")
 
     start_time = datetime.now()
-    start_date = target_date.strftime("%Y-%m-%d")
-    end_date = target_date.strftime("%Y-%m-%d")
+    start_date = target_date
+    end_date = target_date
     
     all_data = asyncio.run(crawl_all_cities(cities, start_date,end_date))
 
     # Save JSON
-    date_str = target_date.strftime("%Y-%m-%d")
     prefix = "raw/weather/"
 
     s3 = boto3.client(
