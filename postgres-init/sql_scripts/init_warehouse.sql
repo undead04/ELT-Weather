@@ -106,10 +106,24 @@ ADD CONSTRAINT uq_dim_date_dmy UNIQUE (day, month, year);
 ALTER TABLE dim_time
 ADD CONSTRAINT uq_dim_time_hms UNIQUE (hour, minute, second);
 
-
 ALTER TABLE fact_weather
 ADD CONSTRAINT uq_fact_weather_dct UNIQUE (date_id, city_id, time_id);
 
 ALTER TABLE fact_air_quality
 ADD CONSTRAINT uq_fact_air_quality_dct UNIQUE (date_id, city_id, time_id);
+
+CREATE VIEW V_DIM_DATE AS 
+SELECT * FROM dim_date;
+
+CREATE VIEW V_DIM_TIME AS 
+SELECT * FROM dim_time;
+
+CREATE VIEW V_DIM_CITY AS 
+SELECT * FROM dim_city;
+
+CREATE VIEW V_FACT_WEATHER AS 
+SELECT * FROM fact_weather;
+
+CREATE VIEW V_FACT_AQ AS 
+SELECT * FROM fact_air_quality; 
 
