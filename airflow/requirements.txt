@@ -4,4 +4,5 @@ aiohttp
 boto3
 s3fs
 psycopg2-binary
+deltalake
 apache-airflow-providers-apache-spark

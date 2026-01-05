@@ -10,11 +10,11 @@ logger = get_logger("city.log")
 
 def load_city():
     # Lấy đường dẫn file city parquet mới nhất từ S3
-    input_path = get_last_file_s3("staging/city/")
+    input_path = get_last_file_s3("silver/dim_city/")
     
     if input_path is None:    
         logger.error("Không tìm thấy bất kỳ file city parquet nào")
-        return
+        raise ValueError("Empty silver city data")
     
     # Kết nối tới Postgres (Service: postgres, DB: airflow)
     db_url = POSTGRES_CONN_URI
@@ -25,7 +25,7 @@ def load_city():
         
         # Đọc dữ liệu bằng Pandas
         df = pd.read_parquet(input_path)
-        
+        df.describe()
         # Ghi vào bảng staging
         table = "stg_dim_city"
         logger.info(f"Đang ghi {len(df)} dòng vào bảng: {table}")

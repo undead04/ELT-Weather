@@ -8,13 +8,14 @@ from elt_app.utils.utils import get_last_file_s3
 
 logger = get_logger("weather.log")
 
-def load_weather():
+def load_weather(** context):
+    target_date = context.get("logical_date").strftime("%Y%m%d")
     # Lấy đường dẫn file parquet mới nhất từ S3
-    input_path = get_last_file_s3("staging/weather/")
+    input_path = get_last_file_s3(f"silver/fact_weather/event_date={target_date}", ".parquet")
 
     if input_path is None:  
         logger.error("Không tìm thấy bất kỳ file weather parquet nào")
-        return
+        raise ValueError("Không tìm thấy bất kỳ file weather parquet nào")
 
     # Kết nối trực tiếp tới Postgres (Service name là 'postgres' theo docker-compose)
     db_url = POSTGRES_CONN_URI
@@ -30,14 +31,6 @@ def load_weather():
         logger.info(f"Columns found: {df.columns.tolist()}")
         
         # Chọn các cột cần thiết
-        selected_columns = [
-            "city_name", "temperature", "humidity",
-            "wind_speed", "precipitation", "weather_code", 
-            "cloud_cover", "rain", "wind_direction", 
-            "apparent_temperature", "date", "hour"
-        ]
-        
-        df = df[selected_columns]
         staging_table = "stg_fact_weather"
         logger.info(f"Writing {len(df)} rows to staging table: {staging_table}")
 

@@ -119,6 +119,26 @@ Dự án bao gồm các DAGs chính trong Airflow:
 2. **Transform**: Spark đọc dữ liệu từ S3, làm sạch, chuyển đổi cấu trúc và lưu lại dưới dạng Parquet.
 3. **Load**: Load dữ liệu từ Parquet vào PostgreSQL (Data Warehouse) sử dụng cơ chế Merge (Upsert) để tránh trùng lặp.
 
+## 📊 Kết nối với Power BI
+
+File báo cáo `weather.pbix` đã được chuẩn bị sẵn để trực quan hóa dữ liệu từ Data Warehouse. Để xem báo cáo, bạn cần kết nối Power BI với PostgreSQL local.
+
+### Thông tin kết nối (Credentials):
+- **Server:** `localhost`
+- **Port:** `5432`
+- **Database:** `weather_dw`
+- **Username:** `airflow`
+- **Password:** `airflow`
+
+### Hướng dẫn cập nhật nguồn dữ liệu:
+1. Mở file `weather.pbix` bằng Power BI Desktop.
+2. Nếu Power BI yêu cầu cài đặt thêm Driver (Npgsql), hãy tải và cài đặt [Npgsql](https://github.com/npgsql/npgsql/releases) (chọn bản MSI để cài đặt dễ dàng).
+3. Trên thanh công cụ, chọn **File** > **Options and settings** > **Data source settings**.
+4. Chọn nguồn dữ liệu PostgreSQL hiện tại và chọn **Change Source...** (hoặc **Edit Permissions** để sửa user/pass).
+5. Đảm bảo thông tin là `localhost:5432` và `weather_dw`.
+6. Nếu được hỏi Credentials, chọn tab **Database**, nhập Username/Password là `airflow`/`airflow`.
+7. Nhấn **Refresh** để tải dữ liệu mới nhất.
+
 ## 🛠 Phát triển (Development)
 
 Để chạy thử nghiệm các script Python cục bộ (không qua Docker), bạn cần thiết lập môi trường ảo:

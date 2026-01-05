@@ -10,6 +10,7 @@ from elt_app.scripts.load.load_weather import load_weather
 from elt_app.scripts.extract.crawl_aq import extract_aq
 from elt_app.scripts.transform.transform_aq import transform_aq
 from elt_app.scripts.load.load_aq import load_aq
+from airflow.providers.common.sql.operators.sql import SQLCheckOperator
 
 
 default_args = {
@@ -51,22 +52,32 @@ with DAG(
         application="/opt/airflow/elt_app/scripts/transform/transform_weather.py",
         name="transform_weather",
         verbose=1,
+        application_args=[
+            "--date", "{{ ds }}"
+        ]
+
     )
     t_transform_aq = SparkSubmitOperator(
         task_id="transform_aq",
         conn_id="spark_default",
         application="/opt/airflow/elt_app/scripts/transform/transform_aq.py",
         name="transform_aq",
-        verbose=1
+        verbose=1,
+        application_args=[
+            "--date", "{{ ds }}"
+        ]
     )
 
     t_load_weather = PythonOperator(
         task_id="load_weather",
-        python_callable=load_weather
+        python_callable=load_weather,
+        provide_context=True
     )
 
     t_load_aq = PythonOperator(
-        task_id="load_aq", python_callable=load_aq
+        task_id="load_aq", 
+        python_callable=load_aq,
+        provide_context=True
     )
 
     t_merge_fact_weather = PostgresOperator(

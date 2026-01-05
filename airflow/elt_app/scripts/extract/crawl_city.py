@@ -3,8 +3,9 @@ import aiohttp
 import json
 from elt_app.utils.config import AWS_BUCKET_ACESS_KEY,AWS_BUCKET_SECRET_KEY,REGION_NAME,BUCKET_NAME
 from datetime import datetime
-from elt_app.utils.logging import get_logger
-import boto3
+from elt_app.utils.logging import get_logger,setup_logging
+import s3fs
+import pandas as pd
 
 logger = get_logger(__name__, domain_file="city.log")
 
@@ -54,50 +55,46 @@ async def crawl_city_async():
 
     # ---- 3. Ghép data lại ----
     output_data = []
+    inseget_time = datetime.now()
     for city, detail in zip(cities, results):
         if detail and len(detail) > 0:
             output_data.append({
                 "city_id": city["code"],
                 "name": city["name"],
+                "inseget_time": inseget_time,
                 **detail[0]
             })
-    
-
-    date_str = datetime.now().strftime("%Y-%m-%d")
-
     #---- 4. Upload JSON lên S3 ----
-
-    s3 = boto3.client(
-        "s3",
-        aws_access_key_id=AWS_BUCKET_ACESS_KEY,
-        aws_secret_access_key=AWS_BUCKET_SECRET_KEY,
-        region_name=REGION_NAME
+    df = pd.DataFrame(output_data)
+    
+    if df.empty:
+        logger.info("No data to save")
+        raise ValueError("No data to save")
+    
+    fs = s3fs.S3FileSystem(
+        key=AWS_BUCKET_ACESS_KEY,
+        secret=AWS_BUCKET_SECRET_KEY,
+        client_kwargs={"region_name": REGION_NAME}
     )
 
     bucket = BUCKET_NAME
-    prefix = "raw/city/"
-    date_str = datetime.now().strftime("%Y-%m-%d")
+    prefix = "bronze/dim_city/"
+    s3_path = f"s3://{BUCKET_NAME}/{prefix}dim_city.json"
 
-    # Convert JSON to bytes
-    data_bytes = json.dumps(output_data, ensure_ascii=False, indent=4).encode("utf-8")
-
-    key = f"{prefix}city_{date_str}.json"
-
-    # Upload
-    s3.put_object(
-        Bucket=bucket,
-        Key=key,
-        Body=data_bytes,
-        ContentType="application/json"
-    )
+    # Sử dụng context manager 'with' để đảm bảo đóng stream sau khi ghi
+    with fs.open(s3_path, 'w') as f:
+        df.to_json(
+            f, 
+            orient="records", 
+            lines=True,
+            force_ascii=False # Thêm cái này nếu dữ liệu có tiếng Việt
+        )
     
-    logger.info("Uploaded to S3: s3://%s/%s", bucket, key)
+    logger.info("Uploaded to S3: s3://%s/%s", bucket, s3_path)
 
 def crawl_city():
     asyncio.run(crawl_city_async())
     
 if __name__ == "__main__":
-    from utils.logging import setup_logging
-
     setup_logging()
     crawl_city()

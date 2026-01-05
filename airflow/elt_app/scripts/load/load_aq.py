@@ -8,13 +8,14 @@ from elt_app.utils.utils import get_last_file_s3
 
 logger = get_logger("aq.log")
 
-def load_aq():
+def load_aq(** context):
+    target_date = context.get("ds")
     # Lấy file Air Quality mới nhất từ S3
-    input_path = get_last_file_s3("staging/aq/")
+    input_path = get_last_file_s3(f"silver/fact_aq/event_date={target_date}", ".parquet")
 
     if input_path is None:
         logger.error("Không tìm thấy file parquet nào cho Air Quality")
-        return
+        raise ValueError("Không tìm thấy file parquet nào cho Air Quality")
 
     # Kết nối tới Postgres (Host là 'postgres' theo Docker service)
     db_url = POSTGRES_CONN_URI
@@ -26,20 +27,11 @@ def load_aq():
         # Đọc dữ liệu trực tiếp từ S3
         df = pd.read_parquet(input_path)
         
-        # 2. Chọn lọc các cột cần thiết (Lọc cột ở đây để dữ liệu gọn nhẹ trước khi ghi)
-        selected_columns = [
-            "city_name", "aqi", "pm25", "pm10", 
-            "no2", "so2", "o3", "co", "co2", "date", "hour"
-        ]
-        
-        # Kiểm tra xem các cột có tồn tại đầy đủ không để tránh lỗi
-        df_staging = df[selected_columns]
-
         staging_table = "stg_fact_air_quality"
-        logger.info(f"Đang nạp {len(df_staging)} dòng vào bảng: {staging_table}")
+        logger.info(f"Đang nạp {len(df)} dòng vào bảng: {staging_table}")
 
         # Ghi dữ liệu vào Postgres (overwrite bảng staging)
-        df_staging.to_sql(
+        df.to_sql(
             name=staging_table,
             con=engine,
             if_exists='replace',

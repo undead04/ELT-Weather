@@ -2,7 +2,7 @@ import asyncio
 import aiohttp
 import pandas as pd
 from elt_app.utils.logging import get_logger
-import boto3
+import s3fs
 from elt_app.utils.config import AWS_BUCKET_ACESS_KEY,AWS_BUCKET_SECRET_KEY,REGION_NAME,BUCKET_NAME
 from typing import Optional, Dict, Any
 from datetime import datetime,timedelta
@@ -86,10 +86,12 @@ async def crawl_all_cities(cities: pd.DataFrame, start_date: str, end_date: str)
         ]
 
         results = await asyncio.gather(*tasks)
-
+        inseget_time = datetime.now()
         for row, data in zip(cities.itertuples(), results):
             if data:
+                data['city_id'] = row.city_id
                 data["city_name"] = row.city_name
+                data["inseget_time"] = inseget_time
                 all_data.append(data)
             else:
                 log(f"❌ Failed: {row.city_name}")
@@ -102,10 +104,10 @@ def extract_weather(**context):
     target_date = context['ds']
     logger.info(f"===== START WEATHER CRAWL {target_date} =====")
 
-    cities_path = get_last_file_s3("staging/city/")
+    cities_path = get_last_file_s3("silver/dim_city/", ".parquet")
     if not cities_path:
         logger.error("❌ No city parquet found.")
-        return
+        raise ValueError("No city parquet found")
 
     cities = pd.read_parquet(cities_path)
     logger.info(f"Loaded {len(cities)} cities from {cities_path}")
@@ -119,30 +121,36 @@ def extract_weather(**context):
     
     all_data = asyncio.run(crawl_all_cities(cities, start_date,end_date))
 
-    # Save JSON
-    prefix = "raw/weather/"
+    df = pd.DataFrame(all_data)
+    df.info()
+    df.head()
+    df.describe()
+    if df.empty:
+        logger.info("No data to save")
+        raise ValueError("No data to save")
+    
+    prefix = "bronze/fact_weather/"
+    
+    bucket = BUCKET_NAME
 
-    s3 = boto3.client(
-        "s3",
-        aws_access_key_id=AWS_BUCKET_ACESS_KEY,
-        aws_secret_access_key=AWS_BUCKET_SECRET_KEY,
-        region_name=REGION_NAME
+    fs = s3fs.S3FileSystem(
+        key=AWS_BUCKET_ACESS_KEY,
+        secret=AWS_BUCKET_SECRET_KEY,
+        client_kwargs={'region_name': REGION_NAME}
     )
 
-    # Convert JSON to bytes
-    data_bytes = json.dumps(all_data, ensure_ascii=False, indent=4).encode("utf-8")
-
-    key = f"{prefix}weather_{target_date}.json"
-
-    s3.put_object(
-        Bucket=BUCKET_NAME,
-        Key=key,
-        Body=data_bytes,
-        ContentType="application/json"
-    )
+    s3_path = f"s3://{bucket}/{prefix}event_date={target_date}/fact_weather.json"
+    # Sử dụng context manager 'with' để đảm bảo đóng stream sau khi ghi
+    with fs.open(s3_path, 'w') as f:
+        df.to_json(
+            f, 
+            orient="records", 
+            lines=True,
+            force_ascii=False # Thêm cái này nếu dữ liệu có tiếng Việt
+        )
 
     duration = (datetime.now() - start_time).seconds
-    logger.info(f"✔ Saved: S3: s3://%s/%s", BUCKET_NAME, key)
+    logger.info(f"✔ Saved: S3: s3://%s/%s", BUCKET_NAME, s3_path)
     logger.info(f"⏱ Total time: {duration} seconds")
     logger.info(f"===== FINISHED WEATHER CRAWL {target_date} =====\n")
 

@@ -2,9 +2,9 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
     col, explode, to_date, hour, lit, udf,arrays_zip
 )
-from pyspark.sql.types import IntegerType, FloatType
+from pyspark.sql.types import IntegerType, FloatType,TimestampType
 from datetime import datetime
-
+import argparse
 from elt_app.utils.config import BUCKET_NAME
 from elt_app.utils.logging import get_logger,setup_logging
 from elt_app.utils.utils import get_last_file_s3
@@ -94,21 +94,28 @@ calc_aqi_udf = udf(calc_aqi, IntegerType())
 
 def transform_aq():
     logger = get_logger(__name__, domain_file="aq_spark.log")
-
-    input_path = get_last_file_s3("raw/aq/",".json")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", help="Target date in YYYY-MM-DD format")
+    args = parser.parse_args()
+    target_date = args.date
+    if not target_date:
+        raise ValueError("--date is required, format YYYY-MM-DD")
+    input_path = get_last_file_s3(f"bronze/fact_aq/event_date={target_date}", ".json")
 
     if input_path is None:
         logger.error("No AQ JSON found")
-        return
+        raise ValueError("No AQ JSON found")
 
     spark = (
         SparkSession.builder
             .appName("Transform AQI")
+            .config("spark.sql.sources.partitionOverwriteMode", "dynamic")
+            .config("spark.sql.parquet.fs.optimized.committer.optimization-enabled", "true")
             .getOrCreate()
         )
 
 
-    df = spark.read.option("multiLine", True).json(input_path)
+    df = spark.read.option("multiline", "true").json(input_path)
 
     # rename columns
     df = df.withColumnRenamed("pm2_5", "pm25") \
@@ -135,6 +142,8 @@ def transform_aq():
 
     df = df.withColumn("row", explode(col("zipped"))).select(
         "city_name",
+        "city_id",
+        "inseget_time",
         col("row.co2").alias("co2"),
         col("row.time").alias("time"),
         col("row.pm25").alias("pm25"),
@@ -147,7 +156,9 @@ def transform_aq():
 
     df = df.withColumn("date", to_date(col("time"))) \
            .withColumn("hour", hour(col("time"))) \
-           .withColumn("co_mg", col("co") / lit(1000))
+           .withColumn("co_mg", col("co") / lit(1000)) \
+           .withColumn("inseget_time", (col("inseget_time") / 1000).cast(TimestampType())) \
+           .withColumn("event_date", lit(target_date))
 
     # calculate AQI
     df = df.withColumn(
@@ -161,15 +172,12 @@ def transform_aq():
             col("o3")
         )
     )
-
-    date_str = datetime.now().strftime("%Y-%m-%d")
-    prefix = "staging/aq/"
-    bucket = BUCKET_NAME
-    key = f"{prefix}aq_{date_str}.parquet"
-    s3_path = f"s3a://{bucket}/{key}"
-
+    s3_path = f"s3a://{BUCKET_NAME}/silver/fact_aq/"
     # Ghi DataFrame thành Parquet lên S3
-    df.write.mode("overwrite").option("useDeprecatedInt96Timestamps", True).parquet(s3_path)
+    df.write.mode("overwrite") \
+     .partitionBy("event_date") \
+     .option("useDeprecatedInt96Timestamps", True) \
+     .parquet(s3_path)
 
     logger.info("Saved AQ Parquet to %s", s3_path)
     spark.stop()

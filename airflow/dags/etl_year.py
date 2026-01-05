@@ -32,9 +32,15 @@ with DAG(
 ) as dag:
 
     # --- TẦNG EXTRACT (Python) ---
-    task_generate_date = PythonOperator(task_id="generate_date", python_callable=generate_data_date)
-    task_generate_time = PythonOperator(task_id="generate_time", python_callable=generate_data_time)
-    task_crawl_city = PythonOperator(task_id="crawl_city", python_callable=crawl_city, op_kwargs={"year": "2024"})
+    task_generate_date = PythonOperator(task_id="generate_date",
+     python_callable=generate_data_date,
+     provide_context=True)
+    task_generate_time = PythonOperator(task_id="generate_time",
+     python_callable=generate_data_time,
+     provide_context=True)
+    task_crawl_city = PythonOperator(task_id="crawl_city",
+     provide_context=True,
+     python_callable=crawl_city, op_kwargs={"year": "2024"})
     # Tầng Transform (Spark)
     task_transform_city = SparkSubmitOperator(
         task_id="transform_city", 
@@ -45,9 +51,12 @@ with DAG(
     )
     # --- TẦNG LOAD (Pandas + SQLAlchemy) ---
     # Đã thay thế SparkSubmitOperator bằng PythonOperator cho nhẹ máy
-    task_load_date = PythonOperator(task_id="load_date", python_callable=load_date)
-    task_load_time = PythonOperator(task_id="load_time", python_callable=load_time)
-    task_load_city = PythonOperator(task_id="load_city", python_callable=load_city)
+    task_load_date = PythonOperator(task_id="load_date", python_callable=load_date,
+    provide_context=True)
+    task_load_time = PythonOperator(task_id="load_time", python_callable=load_time,
+    provide_context=True)
+    task_load_city = PythonOperator(task_id="load_city", python_callable=load_city,
+    provide_context=True)
 
     # --- TẦNG TRANSFORM (SQL - Hợp nhất Star Schema) ---
     # Task này chạy file SQL để Join và Merge dữ liệu từ stg_ vào Gold Layer
