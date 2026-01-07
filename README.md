@@ -14,6 +14,92 @@ Dự án sử dụng các công nghệ sau:
 - **Infrastructure**: Docker & Docker Compose - Quản lý môi trường và service.
 - **Storage**: S3 (AWS S3) - Data Lake (Raw data).
 
+### 📐 Luồng hoạt động (Workflow Architecture)
+
+Dưới đây là sơ đồ luồng dữ liệu của hệ thống ELT:
+
+```mermaid
+graph TD
+    subgraph Sources [Nguồn dữ liệu]
+        API_W[Weather API]
+        API_AQ[Air Quality API]
+    end
+
+    subgraph DataLake [Data Lake (MinIO/S3)]
+        Raw[Raw Data (JSON)]
+    end
+
+    subgraph Processing [Apache Spark Processing]
+        Transform[Transform & Clean]
+    end
+
+    subgraph Warehouse [Data Warehouse (PostgreSQL)]
+        DW[(Star Schema DB)]
+    end
+
+    API_W -->|Extract (Airflow)| Raw
+    API_AQ -->|Extract (Airflow)| Raw
+    Raw -->|Read| Transform
+    Transform -->|Load / Merge| DW
+```
+
+## 🗄️ Mô hình dữ liệu (Data Warehouse Schema)
+
+Hệ thống Data Warehouse được thiết kế theo mô hình **Star Schema** để tối ưu cho việc truy vấn và báo cáo:
+
+```mermaid
+erDiagram
+    FACT_WEATHER {
+        int weather_id PK
+        int city_id FK
+        int date_id FK
+        int time_id FK
+        float temperature
+        float humidity
+        string weather_type
+        float wind_speed
+    }
+    FACT_AIR_QUALITY {
+        int aq_id PK
+        int city_id FK
+        int date_id FK
+        int time_id FK
+        float aqi
+        float pm25
+        float pm10
+        float co2
+    }
+    DIM_CITY {
+        int city_id PK
+        string city_name
+        string country
+        float lat
+        float lon
+    }
+    DIM_DATE {
+        int date_id FK
+        date full_date
+        int day
+        int month
+        int year
+        boolean is_weekend
+    }
+    DIM_TIME {
+        int time_id FK
+        int hour
+        int minute
+        string time_bucket
+    }
+
+    DIM_CITY ||--o{ FACT_WEATHER : "has"
+    DIM_DATE ||--o{ FACT_WEATHER : "happens on"
+    DIM_TIME ||--o{ FACT_WEATHER : "at"
+    
+    DIM_CITY ||--o{ FACT_AIR_QUALITY : "has"
+    DIM_DATE ||--o{ FACT_AIR_QUALITY : "happens on"
+    DIM_TIME ||--o{ FACT_AIR_QUALITY : "at"
+```
+
 ## 📂 Cấu trúc dự án
 
 ```
