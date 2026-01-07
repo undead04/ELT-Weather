@@ -12,12 +12,13 @@ Dự án sử dụng các công nghệ sau:
 - **Data Processing**: [Apache Spark](https://spark.apache.org/) (PySpark) - Xử lý dữ liệu phân tán, clean và transform dữ liệu.
 - **Data Warehouse**: [PostgreSQL](https://www.postgresql.org/) - Lưu trữ dữ liệu đã qua xử lý (Warehouse).
 - **Infrastructure**: Docker & Docker Compose - Quản lý môi trường và service.
-- **Storage**: S3 (MinIO hoặc AWS S3) - Data Lake (Raw data).
+- **Storage**: S3 (AWS S3) - Data Lake (Raw data).
 
 ## 📂 Cấu trúc dự án
 
 ```
 ELT Weather/
+├── api/                # FastAPI Service (Weather & AQ Data)
 ├── airflow/
 │   ├── dags/               # Chứa các Airflow DAGs (etl_day, etl_year)
 │   ├── elt_app/            # Source code chính của ứng dụng
@@ -91,7 +92,7 @@ ELT Weather/
    Vào Airflow UI -> **Admin** -> **Connections** để thiết lập các kết nối:
 
    **a. Kết nối PostgreSQL (Data Warehouse):**
-   *(Nếu chưa được tự động cấu hình qua biến môi trường)*
+   *Kết nối này đã được tự động cấu hình qua biến môi trường trong `docker-compose.yml`.*
    - **Conn Id**: `postgres_default`
    - **Conn Type**: `Postgres`
    - **Host**: `postgres-db`
@@ -102,9 +103,13 @@ ELT Weather/
 
    **b. Kết nối Spark:**
    - **Conn Id**: `spark_default`
-   - **Conn Type**: `Spark`
+   - **Conn Type**: `Generic`
    - **Host**: `spark://spark-master`
    - **Port**: `7077`
+   - **Extra**: `{
+      "deploy-mode": "client",
+      "spark-binary": "spark-submit"
+   }`
 
 ## 🏃‍♂️ Sử dụng Pipeline
 
