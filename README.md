@@ -4,7 +4,33 @@ Dự án Data Engineering xây dựng quy trình ELT (Extract-Load-Transform) đ
 
 Hệ thống được thiết kế để chạy hoàn toàn trên Docker, sử dụng các công nghệ phổ biến trong ngành dữ liệu.
 
-## 🏗 Kiến trúc & Công nghệ
+## � Mục tiêu Phân tích & Business Insights
+
+Dự án này được thiết kế để trả lời các câu hỏi nghiệp vụ (Business Questions) cụ thể về tác động của thời tiết đến môi trường sống:
+
+### 1. 🌦️ Phân tích Thời tiết (Weather Analysis)
+*Tập trung vào biến động khí hậu tại các thành phố.*
+- **Thống kê cơ bản**: Tính toán nhiệt độ, độ ẩm, tốc độ gió trung bình theo (Ngày / Tuần / Tháng).
+- **Cực trị**: Xác định thành phố có nhiệt độ cao nhất/thấp nhất trong khoảng thời gian.
+- **Xu hướng (Trend)**: Biểu đồ biến động nhiệt độ & độ ẩm theo thời gian.
+- **Tương quan nội tại**: Phân tích mối quan hệ giữa nhiệt độ và độ ẩm (Correlation).
+
+### 2. 🌫️ Phân tích Chất lượng không khí (Air Quality Analysis)
+*Đánh giá mức độ ô nhiễm và an toàn sức khỏe.*
+- **Xếp hạng**: Thành phố nào có không khí sạch nhất và ô nhiễm nhất (dựa trên AQI trung bình)?
+- **Chu kỳ**: Xu hướng thay đổi AQI theo khung giờ trong ngày (Sáng/Chiều/Tối) và theo mùa.
+- **Cảnh báo**: Phân tích điều kiện thời tiết (Nhiệt/Ẩm) khi AQI vượt ngưỡng nguy hại (>150).
+- **Tần suất**: Đếm số lượng ngày "Ô nhiễm cao" trong tháng.
+
+### 3. 📉 Tương quan Thời tiết & Không khí (Correlation)
+*Tìm hiểu nguyên nhân và tác động.*
+- **Nhiệt độ vs AQI**: Khi trời nóng lên, chất lượng không khí có xu hướng xấu đi không?
+- **Độ ẩm vs AQI**: Độ ẩm cao có giúp giảm bụi mịn không?
+- **Độ nhạy (Sensitivity)**: Thành phố nào chịu ảnh hưởng mạnh nhất của thời tiết lên chất lượng không khí?
+
+---
+
+## �🏗 Kiến trúc & Công nghệ
 
 Dự án sử dụng các công nghệ sau:
 
