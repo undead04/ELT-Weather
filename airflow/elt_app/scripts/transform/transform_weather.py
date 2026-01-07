@@ -129,7 +129,7 @@ def transform_weather():
         .withColumn("weather_type", coalesce(mapping_expr.getItem(col("weather_code")), lit("Khác")))
         .withColumn("event_date", lit(target_date.replace("-", "")))
         # Xử lý inseget_time an toàn
-        .withColumn("inseget_time", col("inseget_time").cast("timestamp")) 
+        .withColumn("inseget_time", (col("inseget_time") / 1000).cast(TimestampType())) 
     )
     # ==== 7) Ghi lên S3 STAGING ====
     s3_path = f"s3a://{BUCKET_NAME}/silver/fact_weather/"
