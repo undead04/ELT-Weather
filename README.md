@@ -139,6 +139,23 @@ File báo cáo `weather.pbix` đã được chuẩn bị sẵn để trực quan
 6. Nếu được hỏi Credentials, chọn tab **Database**, nhập Username/Password là `airflow`/`airflow`.
 7. Nhấn **Refresh** để tải dữ liệu mới nhất.
 
+## 🔌 API Service (FastAPI)
+
+Dự án cung cấp một RESTful API (FastAPI) để truy xuất dữ liệu từ Data Warehouse.
+
+### Điểm cuối (Endpoints):
+- **Documented UI (Swagger):** http://localhost:8000/docs
+- **ReDoc:** http://localhost:8000/redoc
+
+### Các API chính:
+- `GET /weather/{city_id}?from_date=YYYY-MM-DD&to_date=YYYY-MM-DD`: Lấy dữ liệu thời tiết theo khoảng thời gian.
+- `GET /air_quality/{city_id}?from_date=YYYY-MM-DD&to_date=YYYY-MM-DD`: Lấy dữ liệu AQI theo khoảng thời gian.
+- `GET /city`: Lấy danh sách thành phố.
+- `GET /city/{id}`: Lấy thông tin thành phố theo ID.
+
+### Cách chạy:
+API service được tích hợp trong Docker Compose. Khi chạy `docker compose up`, service `api` sẽ tự động khởi động tại port `8000`.
+
 ## 🛠 Phát triển (Development)
 
 Để chạy thử nghiệm các script Python cục bộ (không qua Docker), bạn cần thiết lập môi trường ảo:

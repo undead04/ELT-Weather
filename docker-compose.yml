@@ -134,6 +134,26 @@ services:
     env_file: .env # Giới hạn Core và RAM để máy không bị treo
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077 --cores 1 --memory 1g
 
+  # =========================
+  # 7. FASTAPI SERVICE
+  # =========================
+  api:
+    build:
+      context: api
+    container_name: weather-api
+    ports:
+      - "8000:8000"
+    networks:
+      - airflow_net
+    volumes:
+      - ./api:/app
+    environment:
+      DATABASE_URL: postgresql://airflow:airflow@postgres:5432/weather_dw
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
+
 volumes:
   airflow_postgres_data:
 
