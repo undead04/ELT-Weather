@@ -42,39 +42,106 @@ Dự án sử dụng các công nghệ sau:
 
 ### 📐 Luồng hoạt động (Workflow Architecture)
 
-Dưới đây là sơ đồ luồng dữ liệu của hệ thống ELT:
+Hệ thống hoạt động dựa trên 2 quy trình ELT chính được quản lý bởi Airflow:
+
+#### 1. 📅 Daily ETL (`etl_day`)
+Chạy hàng ngày để cập nhật dữ liệu Phân tích (Fact Tables). Quy trình này được tối ưu hóa để tiết kiệm tài nguyên (Spark chạy tuần tự).
+
+```mermaid
+graph LR
+    %% Định nghĩa Style - Dùng màu nhạt, viền đậm, chữ đen
+    classDef extract fill:#FFF0F5,stroke:#FF69B4,stroke-width:2px,color:#000;
+    classDef transform fill:#E0F7FA,stroke:#00BCD4,stroke-width:2px,color:#000;
+    classDef load fill:#F1F8E9,stroke:#689F38,stroke-width:2px,color:#000;
+    classDef db fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#000;
+
+    subgraph Extract ["📥 EXTRACT (Python)"]
+        W_E[Crawl Weather]:::extract
+        AQ_E[Crawl Air Quality]:::extract
+    end
+
+    subgraph Transform ["⚙️ TRANSFORM (Spark)"]
+        W_T[Transform Weather]:::transform
+        AQ_T[Transform AQ]:::transform
+    end
+
+    subgraph Load ["💾 LOAD (Postgres)"]
+        W_L[Load Weather]:::load
+        AQ_L[Load AQ]:::load
+        W_M[(Fact Weather)]:::db
+        AQ_M[(Fact AQ)]:::db
+    end
+
+    W_E --> W_T
+    AQ_E --> AQ_T
+    W_T --> W_L
+    AQ_T --> AQ_L
+    W_L --> W_M
+    AQ_L --> AQ_M
+```
+
+#### 2. 📅 Yearly/Initial ETL (`etl_year`)
+Chạy một lần hoặc định kỳ theo năm để khởi tạo dữ liệu Chiều (Dimension Tables).
 
 ```mermaid
 graph TD
-    subgraph Sources ["Nguồn dữ liệu"]
-        API_W["Weather API"]
-        API_AQ["Air Quality API"]
+    %% Style tối giản, tương phản cao
+    classDef date fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px,color:#000;
+    classDef time fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#000;
+    classDef city fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#000;
+    classDef db fill:#FFFFFF,stroke:#333333,stroke-width:2px,color:#000;
+
+    subgraph Date_Dim ["📅 DIMENSION DATE"]
+        direction LR
+        Gen_D[Generate Date]:::date --> Load_D[Load Date]:::date --> Merge_D[(Dim Date)]:::db
     end
 
-    subgraph DataLake ["Data Lake (MinIO/S3)"]
-        Raw["Raw Data (JSON)"]
+    subgraph Time_Dim ["⏰ DIMENSION TIME"]
+        direction LR
+        Gen_T[Generate Time]:::time --> Load_T[Load Time]:::time --> Merge_T[(Dim Time)]:::db
     end
 
-    subgraph Processing ["Apache Spark Processing"]
-        Transform["Transform & Clean"]
+    subgraph City_Dim ["🏙️ DIMENSION CITY"]
+        direction LR
+        Crawl_C[Crawl City]:::city --> Trans_C[Transform City]:::city --> Load_C[Load City]:::city --> Merge_C[(Dim City)]:::db
     end
 
-    subgraph Warehouse ["Data Warehouse (PostgreSQL)"]
-        DW[("Star Schema DB")]
-    end
-
-    API_W -->|Extract (Airflow)| Raw
-    API_AQ -->|Extract (Airflow)| Raw
-    Raw -->|Read| Transform
-    Transform -->|Load / Merge| DW
+    %% Ép 3 subgraph xếp thành 3 hàng dọc bằng mũi tên ẩn
+    Date_Dim ~~~ Time_Dim
+    Time_Dim ~~~ City_Dim
 ```
-
 ## 🗄️ Mô hình dữ liệu (Data Warehouse Schema)
 
 Hệ thống Data Warehouse được thiết kế theo mô hình **Star Schema** để tối ưu cho việc truy vấn và báo cáo:
 
 ```mermaid
 erDiagram
+    %% Định nghĩa các bảng Dimension (Màu vàng nhạt/Xanh nhẹ)
+    DIM_CITY {
+        int city_id PK
+        varchar city_name
+        varchar country
+        float latitude
+        float longitude
+    }
+
+    DIM_DATE {
+        int date_id PK
+        date full_date
+        int day
+        int month
+        int year
+        boolean is_weekend
+    }
+
+    DIM_TIME {
+        int time_id PK
+        int hour
+        int minute
+        varchar time_bucket
+    }
+
+    %% Định nghĩa các bảng Fact (Màu xanh đậm hoặc highlight)
     FACT_WEATHER {
         int weather_id PK
         int city_id FK
@@ -82,9 +149,10 @@ erDiagram
         int time_id FK
         float temperature
         float humidity
-        string weather_type
+        varchar weather_desc
         float wind_speed
     }
+
     FACT_AIR_QUALITY {
         int aq_id PK
         int city_id FK
@@ -95,40 +163,17 @@ erDiagram
         float pm10
         float co2
     }
-    DIM_CITY {
-        int city_id PK
-        string city_name
-        string country
-        float lat
-        float lon
-    }
-    DIM_DATE {
-        int date_id FK
-        date full_date
-        int day
-        int month
-        int year
-        boolean is_weekend
-    }
-    DIM_TIME {
-        int time_id FK
-        int hour
-        int minute
-        string time_bucket
-    }
 
-    DIM_CITY ||--o{ FACT_WEATHER : "has"
-    DIM_DATE ||--o{ FACT_WEATHER : "happens on"
-    DIM_TIME ||--o{ FACT_WEATHER : "at"
-    
-    DIM_CITY ||--o{ FACT_AIR_QUALITY : "has"
-    DIM_DATE ||--o{ FACT_AIR_QUALITY : "happens on"
-    DIM_TIME ||--o{ FACT_AIR_QUALITY : "at"
+    %% Thiết lập mối quan hệ (Relationships)
+    DIM_CITY ||--o{ FACT_WEATHER : "monitors"
+    DIM_DATE ||--o{ FACT_WEATHER : "recorded_at"
+    DIM_TIME ||--o{ FACT_WEATHER : "measured_at"
+
+    DIM_CITY ||--o{ FACT_AIR_QUALITY : "monitors"
+    DIM_DATE ||--o{ FACT_AIR_QUALITY : "recorded_at"
+    DIM_TIME ||--o{ FACT_AIR_QUALITY : "measured_at"
 ```
-
 ## 📂 Cấu trúc dự án
-
-```
 ELT Weather/
 ├── api/                # FastAPI Service (Weather & AQ Data)
 ├── airflow/
