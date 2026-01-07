@@ -174,6 +174,7 @@ erDiagram
     DIM_TIME ||--o{ FACT_AIR_QUALITY : "measured_at"
 ```
 ## 📂 Cấu trúc dự án
+```
 ELT Weather/
 ├── api/                # FastAPI Service (Weather & AQ Data)
 ├── airflow/
