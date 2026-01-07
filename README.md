@@ -46,21 +46,21 @@ Dưới đây là sơ đồ luồng dữ liệu của hệ thống ELT:
 
 ```mermaid
 graph TD
-    subgraph Sources [Nguồn dữ liệu]
-        API_W[Weather API]
-        API_AQ[Air Quality API]
+    subgraph Sources ["Nguồn dữ liệu"]
+        API_W["Weather API"]
+        API_AQ["Air Quality API"]
     end
 
-    subgraph DataLake [Data Lake (MinIO/S3)]
-        Raw[Raw Data (JSON)]
+    subgraph DataLake ["Data Lake (MinIO/S3)"]
+        Raw["Raw Data (JSON)"]
     end
 
-    subgraph Processing [Apache Spark Processing]
-        Transform[Transform & Clean]
+    subgraph Processing ["Apache Spark Processing"]
+        Transform["Transform & Clean"]
     end
 
-    subgraph Warehouse [Data Warehouse (PostgreSQL)]
-        DW[(Star Schema DB)]
+    subgraph Warehouse ["Data Warehouse (PostgreSQL)"]
+        DW[("Star Schema DB")]
     end
 
     API_W -->|Extract (Airflow)| Raw
