@@ -11,11 +11,9 @@ from elt_app.utils.utils import get_last_file_s3
 from elt_app.utils.config import BUCKET_NAME
 WEATHER_CODE_VI = {
     0: "Trời quang đãng",
-
     1: "Chủ yếu quang đãng",
     2: "Có mây rải rác",
     3: "Nhiều mây / u ám",
-
     45: "Sương mù",
     48: "Sương mù đóng băng",
 
@@ -73,12 +71,36 @@ def transform_weather():
         .config("spark.sql.parquet.fs.optimized.committer.optimization-enabled", "true")
         .getOrCreate()
     )
-
+    s3_path = f"s3a://{BUCKET_NAME}/silver/fact_weather/"
+    # spark.sql(f"""
+    # CREATE TABLE IF NOT EXISTS silver.fact_weather (
+    #     city_id         INT,
+    #     city_name       STRING,
+    #     temperature     DOUBLE,
+    #     humidity          INT,
+    #     wind_speed      DOUBLE,
+    #     weather_code    INT,
+    #     weather_type    STRING,
+    #     precipitation   DOUBLE,
+    #     cloud_cover     INT,
+    #     rain            DOUBLE,
+    #     wind_direction    STRING,
+    #     event_date      TIMESTAMP,
+    #     inseget_time     TIMESTAMP,
+    #     date            TIMESTAMP,
+    #     hour            INT,
+    #     time            TIMESTAMP,
+    #     apparent_temperature    DOUBLE
+    # )
+    # USING DELTA
+    # PARTITIONED BY (event_date)
+    # LOCATION '{s3_path}'
+    # """)
     # ==== 3) Load raw JSON ====
-    df = spark.read.option("multiline", "true").json(input_path)
+    df = spark.read.json(input_path)
     df.printSchema()
     # ==== 4) Rename columns giống Pandas version ====
-    df = df.withColumnRenamed("temperature_2m", "temperature") \
+    df_renamed = df.withColumnRenamed("temperature_2m", "temperature") \
            .withColumnRenamed("relative_humidity_2m", "humidity") \
            .withColumnRenamed("dew_point_2m", "dew_point") \
            .withColumnRenamed("wind_speed_10m", "wind_speed") \
@@ -86,7 +108,7 @@ def transform_weather():
            .withColumnRenamed("weather_code", "weather_code") \
            .withColumnRenamed("cloud_cover_low", "cloud_cover")
 
-    df = df.withColumn(
+    df_zipped = df_renamed.withColumn(
         "zipped",
         arrays_zip(
             "time",
@@ -102,7 +124,7 @@ def transform_weather():
         )
     )
 
-    df = df.withColumn("row", explode(col("zipped"))).select(
+    df_exploded = df_zipped.withColumn("row", explode(col("zipped"))).select(
         "city_name",
         "city_id",
         "inseget_time",
@@ -121,20 +143,21 @@ def transform_weather():
     # ==== 6) Add date, hour ====# 3. Mapping Weather Code (Không dùng Lambda/UDF)
     mapping_expr = create_map([lit(x) for x in chain(*WEATHER_CODE_VI.items())])
     
-    df = (df
-        .withColumn("time", to_timestamp("time"))
+    df_clear = (df_exploded
         .withColumn("date", to_date("time"))
         .withColumn("hour", hour("time"))
         .withColumn("weather_code", col("weather_code").cast("int"))
         .withColumn("weather_type", coalesce(mapping_expr.getItem(col("weather_code")), lit("Khác")))
-        .withColumn("event_date", lit(target_date.replace("-", "")))
-        # Xử lý inseget_time an toàn
+        .withColumn("event_date", lit(target_date))
         .withColumn("inseget_time", (col("inseget_time") / 1000).cast(TimestampType())) 
     )
+    if(df_clear.count() != df.count()*24):
+        logger.error(f"Number of rows in input data: {df.count()}")
+        logger.error(f"Number of rows in output data: {df_clear.count()}")
+        raise ValueError("Number of rows in input data and output data do not match")
     # ==== 7) Ghi lên S3 STAGING ====
-    s3_path = f"s3a://{BUCKET_NAME}/silver/fact_weather/"
 
-    df.write.mode("overwrite") \
+    df_clear.write.mode("overwrite") \
      .partitionBy("event_date") \
      .option("useDeprecatedInt96Timestamps", True) \
      .parquet(s3_path)

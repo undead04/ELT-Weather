@@ -2,7 +2,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from elt_app.utils.logging import get_logger, setup_logging
 from elt_app.utils.config import (
-    POSTGRES_CONN_URI
+    POSTGRES_CONN_URI,BUCKET_NAME
 )
 from elt_app.utils.utils import get_last_file_s3
 
@@ -10,12 +10,8 @@ logger = get_logger("city.log")
 
 def load_city():
     # Lấy đường dẫn file city parquet mới nhất từ S3
-    input_path = get_last_file_s3("silver/dim_city/")
-    
-    if input_path is None:    
-        logger.error("Không tìm thấy bất kỳ file city parquet nào")
-        raise ValueError("Empty silver city data")
-    
+    input_path = f"s3a://{BUCKET_NAME}/silver/dim_city/"
+        
     # Kết nối tới Postgres (Service: postgres, DB: airflow)
     db_url = POSTGRES_CONN_URI
     engine = create_engine(db_url)
@@ -25,20 +21,23 @@ def load_city():
         
         # Đọc dữ liệu bằng Pandas
         df = pd.read_parquet(input_path)
-        df.describe()
+        if df.empty:
+            logger.warning("Không có dữ liệu để nạp vào Postgres")
+            raise
+        logger.info(f"Columns found: {df.columns.tolist()}")
         # Ghi vào bảng staging
         table = "stg_dim_city"
-        logger.info(f"Đang ghi {len(df)} dòng vào bảng: {table}")
-        
-        # Sử dụng if_exists='replace' để làm sạch bảng staging trước khi nạp mới
-        # Đây là cách làm an toàn cho layer Staging
-        df.to_sql(
-            name=table,
-            con=engine,
-            if_exists='replace',
-            index=False,
-            method='multi'
-        )
+        with engine.begin() as conn:  # engine.begin() tự động START TRANSACTION và COMMIT khi thoát block
+            logger.info(f"Đang ghi {len(df)} dòng vào bảng: {table}")
+
+            df.to_sql(
+                name=table,
+                con=conn, # Dùng connection thay vì engine
+                if_exists='replace',
+                index=False,
+                method='multi',
+                chunksize=5000
+            )
 
         logger.info(f"Ghi dữ liệu vào {table} thành công!")
         
