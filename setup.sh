@@ -11,6 +11,7 @@ fi
 
 # List of JARs to download
 declare -A JARS=(
+    ["aws-glue-datacatalog-hive2-client-3.4.0.jar"]="https://repo1.maven.org/maven2/com/amazonaws/aws-glue-datacatalog-hive2-client/3.4.0/aws-glue-datacatalog-hive2-client-3.4.0.jar"
     ["hadoop-aws-3.3.4.jar"]="https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar"
     ["aws-java-sdk-bundle-1.12.320.jar"]="https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.320/aws-java-sdk-bundle-1.12.320.jar"
     ["delta-spark_2.12-3.2.0.jar"]="https://repo1.maven.org/maven2/io/delta/delta-spark_2.12/3.2.0/delta-spark_2.12-3.2.0.jar"

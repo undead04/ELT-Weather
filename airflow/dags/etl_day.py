@@ -30,7 +30,7 @@ with DAG(
     schedule_interval="@daily",
     max_active_runs=1,
     start_date=datetime(2025, 12, 1),
-    catchup=False,
+    catchup=True,
     tags=["elt", "pandas", "postgres"],
     template_searchpath=['/opt/airflow/'],
 ) as dag:

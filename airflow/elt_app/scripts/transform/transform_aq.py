@@ -99,26 +99,50 @@ def transform_aq():
     args = parser.parse_args()
     target_date = args.date
     if not target_date:
-        raise ValueError("--date is required, format YYYY-MM-DD")
+        logger.error("--date is required, format YYYY-MM-DD")
+        raise 
     input_path = get_last_file_s3(f"bronze/fact_aq/event_date={target_date}", ".json")
 
     if input_path is None:
         logger.error("No AQ JSON found")
-        raise ValueError("No AQ JSON found")
+        raise
 
     spark = (
         SparkSession.builder
             .appName("Transform AQI")
+            .enableHiveSupport()
             .config("spark.sql.sources.partitionOverwriteMode", "dynamic")
             .config("spark.sql.parquet.fs.optimized.committer.optimization-enabled", "true")
             .getOrCreate()
         )
+    s3_path = f"s3a://{BUCKET_NAME}/silver/fact_aq/"
+    # spark.sql(f"""
+    # CREATE TABLE IF NOT EXISTS silver.fact_aq (
+    #     city_id         INT,
+    #     city_name       STRING,
+    #     aqi             INT,
+    #     pm25            DOUBLE,
+    #     pm10            DOUBLE,
+    #     no2             DOUBLE,
+    #     so2             DOUBLE,
+    #     co              DOUBLE,
+    #     o3              DOUBLE,
+    #     co2             DOUBLE,
+    #     event_date      TIMESTAMP,
+    #     inseget_time     TIMESTAMP,
+    #     date            TIMESTAMP,
+    #     hour            INT,
+    #     time            TIMESTAMP
+    # )
+    # USING DELTA
+    # PARTITIONED BY (event_date)
+    # LOCATION '{s3_path}'
+    # """)
 
-
-    df = spark.read.option("multiline", "true").json(input_path)
+    df = spark.read.json(input_path)
 
     # rename columns
-    df = df.withColumnRenamed("pm2_5", "pm25") \
+    df_renamed = df.withColumnRenamed("pm2_5", "pm25") \
            .withColumnRenamed("carbon_monoxide", "co") \
            .withColumnRenamed("carbon_dioxide", "co2") \
            .withColumnRenamed("nitrogen_dioxide", "no2") \
@@ -126,7 +150,7 @@ def transform_aq():
            .withColumnRenamed("ozone", "o3")
 
     # explode data
-    df = df.withColumn(
+    df_zipped = df_renamed.withColumn(
         "zipped",
         arrays_zip(
             "time",
@@ -140,7 +164,7 @@ def transform_aq():
         )
     )
 
-    df = df.withColumn("row", explode(col("zipped"))).select(
+    df_exploded = df_zipped.withColumn("row", explode(col("zipped"))).select(
         "city_name",
         "city_id",
         "inseget_time",
@@ -154,14 +178,14 @@ def transform_aq():
         col("row.o3").alias("o3"),
     )
 
-    df = df.withColumn("date", to_date(col("time"))) \
+    df_clear = df_exploded.withColumn("date", to_date(col("time"))) \
            .withColumn("hour", hour(col("time"))) \
            .withColumn("co_mg", col("co") / lit(1000)) \
            .withColumn("inseget_time", (col("inseget_time") / 1000).cast(TimestampType())) \
            .withColumn("event_date", lit(target_date))
 
     # calculate AQI
-    df = df.withColumn(
+    df_clear = df_clear.withColumn(
         "aqi",
         calc_aqi_udf(
             col("pm25"),
@@ -172,9 +196,13 @@ def transform_aq():
             col("o3")
         )
     )
-    s3_path = f"s3a://{BUCKET_NAME}/silver/fact_aq/"
+    if df_clear.count() != df.count()*24:
+        logger.error(f"Number of rows in input data: {df.count()}")
+        logger.error(f"Number of rows in output data: {df_clear.count()}")
+        raise ValueError("Number of rows in input data and output data do not match")
+    
     # Ghi DataFrame thành Parquet lên S3
-    df.write.mode("overwrite") \
+    df_clear.write.mode("overwrite") \
      .partitionBy("event_date") \
      .option("useDeprecatedInt96Timestamps", True) \
      .parquet(s3_path)

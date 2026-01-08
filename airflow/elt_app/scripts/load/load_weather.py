@@ -2,20 +2,17 @@ import pandas as pd
 from sqlalchemy import create_engine
 from elt_app.utils.logging import get_logger, setup_logging
 from elt_app.utils.config import (
-    POSTGRES_CONN_URI
+    POSTGRES_CONN_URI,BUCKET_NAME
 )
 from elt_app.utils.utils import get_last_file_s3
 
 logger = get_logger("weather.log")
 
 def load_weather(** context):
-    target_date = context.get("logical_date").strftime("%Y%m%d")
+    target_date = context.get("ds")
     # Lấy đường dẫn file parquet mới nhất từ S3
-    input_path = get_last_file_s3(f"silver/fact_weather/event_date={target_date}", ".parquet")
+    input_path = f"s3a://{BUCKET_NAME}/silver/fact_weather/event_date={target_date}"
 
-    if input_path is None:  
-        logger.error("Không tìm thấy bất kỳ file weather parquet nào")
-        raise ValueError("Không tìm thấy bất kỳ file weather parquet nào")
 
     # Kết nối trực tiếp tới Postgres (Service name là 'postgres' theo docker-compose)
     db_url = POSTGRES_CONN_URI
@@ -25,27 +22,29 @@ def load_weather(** context):
         logger.info(f"Reading parquet từ {input_path} bằng Pandas")
         
         # Đọc dữ liệu (Pandas tự dùng s3fs để kết nối MinIO/S3)
-        df = pd.read_parquet(input_path)
-        
+        df = pd.read_parquet(input_path,engine="pyarrow")
+        if df.empty:
+            logger.warning("Không có dữ liệu để nạp vào Postgres")
+            raise
         # Log schema và vài dòng đầu để debug tương tự spark.printSchema()
         logger.info(f"Columns found: {df.columns.tolist()}")
         
         # Chọn các cột cần thiết
         staging_table = "stg_fact_weather"
-        logger.info(f"Writing {len(df)} rows to staging table: {staging_table}")
+        
+        with engine.begin() as conn:  # engine.begin() tự động START TRANSACTION và COMMIT khi thoát block
+            logger.info(f"Đang nạp {len(df)} dòng vào bảng: {staging_table}")
 
-        # Ghi vào Postgres
-        # method='multi' giúp insert nhanh hơn. chunksize giúp chia nhỏ dữ liệu tránh treo memory.
-        df.to_sql(
-            name=staging_table,
-            con=engine,
-            if_exists='replace',
-            index=False,
-            method='multi',
-            chunksize=5000 
-        )
+            df.to_sql(
+                name=staging_table,
+                con=conn, # Dùng connection thay vì engine
+                if_exists='replace',
+                index=False,
+                method='multi',
+                chunksize=5000 
+            )
 
-        logger.info(f"Data written to {staging_table} successfully")
+        logger.info(f"Ghi dữ liệu vào {staging_table} thành công và đã COMMIT.")
     
     except Exception as e:
         logger.error(f"Failed loading staging FACT_WEATHER: {e}")
