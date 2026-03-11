@@ -1,8 +1,6 @@
+dbt-postgres
+requests
 pandas
-pyarrow
-aiohttp
-boto3
-s3fs
+python-dotenv
 psycopg2-binary
-deltalake
-apache-airflow-providers-apache-spark
+astronomer-cosmos

@@ -1,0 +1,283 @@
+version: 2
+
+models:
+  - name: "dm_health_daily"
+    description: "Gom nhóm dữ liệu theo ngày để đánh giá rủi ro tổng thể."
+    columns:
+      - name: province_id
+        description: "ID của tỉnh thành"
+        data_type: int
+        tests:
+          - not_null
+      - name: date_key
+        description: "ID của ngày"
+        data_type: int
+        tests:
+          - not_null
+      - name: province_name
+        description: "Tên tỉnh thành"
+        data_type: string
+        tests:
+          - not_null
+      - name: full_date
+        description: "Ngày"
+        data_type: date
+        tests:
+          - not_null
+      - name: max_uv_index
+        description: "Chỉ số UV"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between 0 and 20"
+              config:
+                severity: warn
+      - name: avg_temp_c
+        description: "Nhiệt độ Celsius"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between -50 and 60"
+              config:
+                severity: warn
+      - name: avg_humidity
+        description: "Độ ẩm"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between 0 and 100"
+              config:
+                severity: warn
+      - name: avg_pm2_5
+        description: "Chỉ số bụi mịn 2.5"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between 0 and 1000"
+              config:
+                severity: warn
+      - name: heat_index_max
+        description: "chỉ số nhiệt độ cảm nhận được"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between 0 and 100"
+              config:
+                severity: warn
+      - name: wind_chill_min
+        description: "nhiệt độ cảm nhận (gió lạnh)"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between -100 and 100"
+              config:
+                severity: warn
+      - name: avg_precipitation
+        description: "Lượng mưa"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between 0 and 500"
+              config:
+                severity: warn
+      - name: aqi_category
+        description: "Chỉ số bụi mịn 2.5"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Good", "Moderate", "Unhealthy", "Hazardous"]
+              config:
+                severity: warn
+      - name: main_risk_factor
+        description: "Yếu tố rủi ro chính"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Extreme Heat",
+                    "Extreme Rain",
+                    "Heat",
+                    "Extreme Cold",
+                    "Cold",
+                    "High Pollution",
+                    "Moderate Pollution",
+                    "Extreme UV",
+                    "High UV",
+                    "Safe",
+                  ]
+                config:
+                  severity: warn
+      - name: update_at
+        description: "Thời gian cập nhật dữ liệu tổng hợp"
+        data_type: timestamp
+        tests:
+          - not_null
+  - name: "dm_activity_plan"
+    description: "Dữ liệu dự báo (forecast) chi tiết theo giờ để khuyến nghị hành động, sử dụng suitability_score làm cột điều hướng chính."
+    columns:
+      - name: province_id
+        description: "ID của tỉnh thành"
+        data_type: int
+        tests:
+          - not_null
+      - name: province_name
+        description: "Tên tỉnh thành"
+        data_type: string
+        tests:
+          - not_null
+      - name: event_time
+        description: "Thời gian sự kiện"
+        data_type: timestamp
+        tests:
+          - not_null
+      - name: date_key
+        description: "ID của ngày"
+        data_type: int
+        tests:
+          - not_null
+      - name: time_key
+        description: "ID của giờ"
+        data_type: int
+        tests:
+          - not_null
+      - name: suitability_score
+        description: "Chỉ số mức độ phù hợp"
+        data_type: float
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "between 0 and 100"
+              config:
+                severity: warn
+      - name: advice_text
+        description: "Nội dung khuyến nghị"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Thời tiết tuyệt vời, thoải mái hoạt động!",
+                    "Nên hạn chế hoạt động mạnh.",
+                    "Độc hại, không ra ngoài!",
+                  ]
+              config:
+                severity: warn
+      - name: data_source
+        description: "Nguồn dữ liệu"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Open-Meteo", "Open-Weather-Map"]
+              config:
+                severity: warn
+      - name: update_at
+        description: "Thời gian cập nhật kế hoạch hoạt động"
+        data_type: timestamp
+        tests:
+          - not_null
+  - name: "dm_medical_alert"
+    description: "Bảng cảnh báo y tế từ dữ liệu thực tế (actual)."
+    columns:
+      - name: province_id
+        description: "ID của tỉnh thành"
+        data_type: int
+        tests:
+          - not_null
+      - name: province_name
+        description: "Tên tỉnh thành"
+        data_type: string
+        tests:
+          - not_null
+      - name: event_time
+        description: "Thời gian sự kiện"
+        data_type: timestamp
+        tests:
+          - not_null
+      - name: date_key
+        description: "ID của ngày"
+        data_type: int
+        tests:
+          - not_null
+      - name: time_key
+        description: "ID của giờ"
+        data_type: int
+        tests:
+          - not_null
+      - name: alert_type
+        description: "Loại cảnh báo"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Forecast", "Actual"]
+              config:
+                severity: warn
+      - name: risk_type
+        description: "Loại rủi ro"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Respiratory",
+                    "Skin/Eyes",
+                    "Cardiovascular",
+                    "Safety/Accessibility",
+                    "Unknown",
+                  ]
+              config:
+                severity: warn
+      - name: risk_level
+        description: "Mức độ rủi ro"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Extreme", "High", "Moderate"]
+              config:
+                severity: warn
+      - name: recommendation
+        description: "Khuyến nghị"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Mưa rất to, cần hỗ trợ di chuyển đặc biệt.",
+                    "Đeo khẩu trang N95, hạn chế tối đa ra ngoài.",
+                    "Tránh ánh nắng trực tiếp, nguy cơ sốc nhiệt.",
+                    "Nguy cơ sốc nhiệt cao, ưu tiên xe có điều hòa.",
+                    "Nguy cơ hạ thân nhiệt, cần xe ấm.",
+                    "Cân nhắc hoãn lịch khám nếu không cần thiết.",
+                  ]
+              config:
+                severity: warn
+
+      - name: affected_population
+        description: "Dân số bị ảnh hưởng"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Everyone", "Sensitive Groups"]
+              config:
+                severity: warn
+      - name: update_at
+        description: "Thời gian cập nhật cảnh báo"
+        data_type: timestamp
+        tests:
+          - not_null

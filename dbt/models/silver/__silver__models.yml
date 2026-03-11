@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: int_weather_aq_current
+    description: "Lớp Silver kết hợp dữ liệu thời tiết và AQ hiện tại, tính toán Heat Index và Wind Chill."
+    columns:
+      - name: province_id
+        data_type: int
+        tests: [not_null]
+      - name: date_key
+        data_type: int
+        tests: [not_null]
+      - name: time_key
+        data_type: int
+        tests: [not_null]
+
+  - name: int_weather_aq_forecast
+    description: "Lớp Silver kết hợp dữ liệu dự báo thời tiết và AQ, tính toán Heat Index và Wind Chill."
+    columns:
+      - name: province_id
+        data_type: int
+        tests: [not_null]
+      - name: date_key
+        data_type: int
+        tests: [not_null]
+      - name: time_key
+        data_type: int
+        tests: [not_null]

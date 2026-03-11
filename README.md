@@ -1,344 +1,118 @@
-# ELT Weather Project
+# Uber Healthy - Weather-Driven Health Analytics 🌦️🏥
 
-Dự án Data Engineering xây dựng quy trình ELT (Extract-Load-Transform) để thu thập, xử lý và phân tích dữ liệu Thời tiết (Weather) và Chất lượng không khí (Air Quality) cho các thành phố tại Việt Nam.
+Dự án **Uber Healthy** là một hệ thống dữ liệu ELT (Extract-Load-Transform) tiên tiến, được thiết kế để theo dõi, phân tích và đưa ra các khuyến nghị về sức khỏe tự động dựa trên dòng dữ liệu Thời tiết (Weather) và Chất lượng không khí (Air Quality) từ Open-Meteo API.
 
-Hệ thống được thiết kế để chạy hoàn toàn trên Docker, sử dụng các công nghệ phổ biến trong ngành dữ liệu.
-
-## � Mục tiêu Phân tích & Business Insights
-
-Dự án này được thiết kế để trả lời các câu hỏi nghiệp vụ (Business Questions) cụ thể về tác động của thời tiết đến môi trường sống:
-
-### 1. 🌦️ Phân tích Thời tiết (Weather Analysis)
-*Tập trung vào biến động khí hậu tại các thành phố.*
-- **Thống kê cơ bản**: Tính toán nhiệt độ, độ ẩm, tốc độ gió trung bình theo (Ngày / Tuần / Tháng).
-- **Cực trị**: Xác định thành phố có nhiệt độ cao nhất/thấp nhất trong khoảng thời gian.
-- **Xu hướng (Trend)**: Biểu đồ biến động nhiệt độ & độ ẩm theo thời gian.
-- **Tương quan nội tại**: Phân tích mối quan hệ giữa nhiệt độ và độ ẩm (Correlation).
-
-### 2. 🌫️ Phân tích Chất lượng không khí (Air Quality Analysis)
-*Đánh giá mức độ ô nhiễm và an toàn sức khỏe.*
-- **Xếp hạng**: Thành phố nào có không khí sạch nhất và ô nhiễm nhất (dựa trên AQI trung bình)?
-- **Chu kỳ**: Xu hướng thay đổi AQI theo khung giờ trong ngày (Sáng/Chiều/Tối) và theo mùa.
-- **Cảnh báo**: Phân tích điều kiện thời tiết (Nhiệt/Ẩm) khi AQI vượt ngưỡng nguy hại (>150).
-- **Tần suất**: Đếm số lượng ngày "Ô nhiễm cao" trong tháng.
-
-### 3. 📉 Tương quan Thời tiết & Không khí (Correlation)
-*Tìm hiểu nguyên nhân và tác động.*
-- **Nhiệt độ vs AQI**: Khi trời nóng lên, chất lượng không khí có xu hướng xấu đi không?
-- **Độ ẩm vs AQI**: Độ ẩm cao có giúp giảm bụi mịn không?
-- **Độ nhạy (Sensitivity)**: Thành phố nào chịu ảnh hưởng mạnh nhất của thời tiết lên chất lượng không khí?
+Mục tiêu chính của dự án là biến dữ liệu khí tượng thô thành những thông tin hữu ích (Actionable Insights) giúp bảo vệ sức khỏe cộng đồng và tối ưu hóa các hoạt động ngoài trời.
 
 ---
 
-## �🏗 Kiến trúc & Công nghệ
+## 🌟 Tính năng cốt lõi (Core Features)
 
-Dự án sử dụng các công nghệ sau:
+### 1. 🏥 Phân tích Sức khỏe hàng ngày (`dm_health_daily`)
+*Đánh giá tổng hợp các chỉ số rủi ro môi trường theo ngày:*
+- **Cảnh báo chất lượng không khí (AQI Monitoring)**: Phân loại chất lượng không khí (Good, Moderate, Unhealthy, Hazardous).
+- **Cảnh báo thời tiết cực đoan (Extreme Conditions)**: Cảnh báo sớm về Nhiệt độ cực đoan (Extreme Heat/Cold), Mưa lớn, hoặc chỉ số UV cao (High UV).
+- **Phân loại Rủi ro chính (Main Risk Factor)**: Xác định yếu tố rủi ro chính trong ngày để người dùng có biện pháp phòng ngừa.
 
-- **Orchestration**: [Apache Airflow](https://airflow.apache.org/) - Lên lịch và quản lý workflow (DAGs).
-- **Data Processing**: [Apache Spark](https://spark.apache.org/) (PySpark) - Xử lý dữ liệu phân tán, clean và transform dữ liệu.
-- **Data Warehouse**: [PostgreSQL](https://www.postgresql.org/) - Lưu trữ dữ liệu đã qua xử lý (Warehouse).
-- **Infrastructure**: Docker & Docker Compose - Quản lý môi trường và service.
-- **Storage**: S3 (AWS S3) - Data Lake (Raw data).
+### 2. 🏃 Kế hoạch Hoạt động Thông minh (`dm_activity_plan`)
+*Sử dụng mô hình chấm điểm (Suitability Score) để tư vấn:*
+- **Chấm điểm tính phù hợp (Score-based Advice)**: Tự động tính toán mức độ và điểm số phù hợp cho hoạt động ngoài trời (0-100).
+- **Khuyến nghị cá nhân hóa (Personalized Recommendations)**: Đưa ra lời khuyên cụ thể theo từng mốc thời gian (Ví dụ: "Thời tiết tuyệt vời, thoải mái hoạt động!", "Nên hạn chế hoạt động mạnh", hoặc "Độc hại, không ra ngoài!").
 
-### 📐 Luồng hoạt động (Workflow Architecture)
+### 3. 🚨 Cảnh báo Y tế kịp thời (`dm_medical_alert`)
+*Hệ thống phát cảnh báo y tế linh hoạt cho cả Hiện tại (Actual) & Dự báo (Forecast):*
+- **Đối tượng bị ảnh hưởng (Affected Population)**: Phân tích nhóm dân cư bị ảnh hưởng (Everyone, Sensitive Groups).
+- **Khuyến nghị Y tế (Medical Recommendation)**: Đề xuất các hành động kịp thời như "Đeo khẩu trang N95", "Tránh ánh nắng trực tiếp", "Nguy cơ sốc nhiệt cao".
 
-Hệ thống hoạt động dựa trên 2 quy trình ELT chính được quản lý bởi Airflow:
+---
 
-#### 1. 📅 Daily ETL (`etl_day`)
-Chạy hàng ngày để cập nhật dữ liệu Phân tích (Fact Tables). Quy trình này được tối ưu hóa để tiết kiệm tài nguyên (Spark chạy tuần tự).
+## 🏗️ Kiến trúc Công nghệ (Modern Data Stack)
 
-```mermaid
-graph LR
-    %% Định nghĩa Style - Dùng màu nhạt, viền đậm, chữ đen
-    classDef extract fill:#FFF0F5,stroke:#FF69B4,stroke-width:2px,color:#000;
-    classDef transform fill:#E0F7FA,stroke:#00BCD4,stroke-width:2px,color:#000;
-    classDef load fill:#F1F8E9,stroke:#689F38,stroke-width:2px,color:#000;
-    classDef db fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#000;
+Hệ thống được thiết kế theo tư tưởng hiện đại, đảm bảo tính ổn định và khả năng mở rộng nhanh chóng:
 
-    subgraph Extract ["📥 EXTRACT (Python)"]
-        W_E[Crawl Weather]:::extract
-        AQ_E[Crawl Air Quality]:::extract
-    end
+- **Orchestration**: [Apache Airflow](https://airflow.apache.org/) - Lên lịch và điều phối toàn bộ luồng Extract & Transformation.
+- **Analytics Engineering**: [dbt (Data Build Tool)](https://www.getdbt.com/) - Tính toán, xây dựng mô hình dữ liệu (Marts) và kiểm soát chất lượng (Data Quality Tests).
+- **Integration**: **Astronomer Cosmos** - Nhúng trực tiếp DBT Models thành các Airflow TaskGroups một cách mượt mà (`DbtTaskGroup`).
+- **Data Warehouse**: [PostgreSQL](https://www.postgresql.org/) - Lưu trữ tập trung toàn bộ dữ liệu (Raw, Staging, Silver, Intermediate, Marts).
+- **Data Source**: [Open-Meteo API](https://open-meteo.com/) - Nguồn dữ liệu thời tiết và chất lượng không khí mở.
+- **Infrastructure**: Docker & Docker Compose - Quản lý môi trường độc lập, cô lập.
+- **Data Visualization**: Power BI - Business Insights Dashboard.
 
-    subgraph Transform ["⚙️ TRANSFORM (Spark)"]
-        W_T[Transform Weather]:::transform
-        AQ_T[Transform AQ]:::transform
-    end
+---
 
-    subgraph Load ["💾 LOAD (Postgres)"]
-        W_L[Load Weather]:::load
-        AQ_L[Load AQ]:::load
-        W_M[(Fact Weather)]:::db
-        AQ_M[(Fact AQ)]:::db
-    end
+## 🚀 Cấu trúc Luồng Dữ liệu (Pipelines)
 
-    W_E --> W_T
-    AQ_E --> AQ_T
-    W_T --> W_L
-    AQ_T --> AQ_L
-    W_L --> W_M
-    AQ_L --> AQ_M
+Hệ thống cung cấp 3 DAGs (Directed Acyclic Graphs) chính xử lý dữ liệu với các Frequency khác nhau:
+
+1. **`etl_current`**: Pipeline chạy mỗi 15 phút, thu thập dữ liệu thời tiết/AQI theo thời gian thực (Current).
+2. **`etl_forecast`**: Pipeline chạy hàng ngày, dự báo thời tiết và AQI.
+3. **`etl_historical`**: Pipeline tổng hợp dữ liệu quá khứ.
+
+> **💡 Tính năng Backfill Nâng cao (Bypass Incremental)**  
+> Toàn bộ các mô hình DBT (từ `staging` đến `marts`) đều được thiết kế dạng `incremental`. Đặc biệt, hệ thống hỗ trợ truyền tham số `is_backfill=True` qua Airflow Conf để **bỏ qua logic incremental** trong các trường hợp cần tải lại hoặc backfill trực tiếp lịch sử mà không lo bị chặn bởi giới hạn ngày của các bản ghi có sẵn.
+
+---
+
+## 📂 Tổ chức mã nguồn (Project Structure)
+
+```
+Uber Healthy/
+├── airflow/            # Orchestration Layer (Airflow)
+│   ├── dags/           # DAGs: current_flow, forecast_flow, historical_flow
+│   └── etl_app/        # Các scripts Python Extract & Load dữ liệu từ API
+├── dbt/                # Transformation Layer (DBT)
+│   ├── models/         
+│   │   ├── staging/    # Làm sạch & chuyển đổi kiểu dữ liệu (stg_*)
+│   │   ├── silver/     # Join bảng & xử lý logic tính toán y tế phức tạp (int_*)
+│   │   ├── intermediate/ # Bảng trung gian chuẩn bị dữ liệu (int_*)
+│   │   └── marts/      # Bảng nghiệp vụ đầu ra cho BI (dm_*)
+│   └── tests/          # Data Quality Verification (Tests tùy chỉnh)
+├── infra/              # Cấu hình kiến trúc hạ tầng (Docker Compose cho DB, Airflow)
+└── README.md           # Project Documentation
 ```
 
-#### 2. 📅 Yearly/Initial ETL (`etl_year`)
-Chạy một lần hoặc định kỳ theo năm để khởi tạo dữ liệu Chiều (Dimension Tables).
+---
 
-```mermaid
-graph TD
-    %% Style tối giản, tương phản cao
-    classDef date fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px,color:#000;
-    classDef time fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#000;
-    classDef city fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#000;
-    classDef db fill:#FFFFFF,stroke:#333333,stroke-width:2px,color:#000;
+## ⚙️ Hướng dẫn Cài đặt & Triển khai
 
-    subgraph Date_Dim ["📅 DIMENSION DATE"]
-        direction LR
-        Gen_D[Generate Date]:::date --> Load_D[Load Date]:::date --> Merge_D[(Dim Date)]:::db
-    end
+### 1. Yêu cầu hệ thống
+- Docker & Docker Compose.
+- Python 3.9+ (nếu muốn phát triển local).
 
-    subgraph Time_Dim ["⏰ DIMENSION TIME"]
-        direction LR
-        Gen_T[Generate Time]:::time --> Load_T[Load Time]:::time --> Merge_T[(Dim Time)]:::db
-    end
-
-    subgraph City_Dim ["🏙️ DIMENSION CITY"]
-        direction LR
-        Crawl_C[Crawl City]:::city --> Trans_C[Transform City]:::city --> Load_C[Load City]:::city --> Merge_C[(Dim City)]:::db
-    end
-
-    %% Ép 3 subgraph xếp thành 3 hàng dọc bằng mũi tên ẩn
-    Date_Dim ~~~ Time_Dim
-    Time_Dim ~~~ City_Dim
-```
-## 🗄️ Mô hình dữ liệu (Data Warehouse Schema)
-
-Hệ thống Data Warehouse được thiết kế theo mô hình **Star Schema** để tối ưu cho việc truy vấn và báo cáo:
-
-```mermaid
-erDiagram
-    %% Định nghĩa các bảng Dimension (Màu vàng nhạt/Xanh nhẹ)
-    DIM_CITY {
-        int city_id PK
-        varchar city_name
-        varchar country
-        float latitude
-        float longitude
-    }
-
-    DIM_DATE {
-        int date_id PK
-        date full_date
-        int day
-        int month
-        int year
-        boolean is_weekend
-    }
-
-    DIM_TIME {
-        int time_id PK
-        int hour
-        int minute
-        varchar time_bucket
-    }
-
-    %% Định nghĩa các bảng Fact (Màu xanh đậm hoặc highlight)
-    FACT_WEATHER {
-        int weather_id PK
-        int city_id FK
-        int date_id FK
-        int time_id FK
-        float temperature
-        float humidity
-        varchar weather_desc
-        float wind_speed
-    }
-
-    FACT_AIR_QUALITY {
-        int aq_id PK
-        int city_id FK
-        int date_id FK
-        int time_id FK
-        float aqi
-        float pm25
-        float pm10
-        float co2
-    }
-
-    %% Thiết lập mối quan hệ (Relationships)
-    DIM_CITY ||--o{ FACT_WEATHER : "monitors"
-    DIM_DATE ||--o{ FACT_WEATHER : "recorded_at"
-    DIM_TIME ||--o{ FACT_WEATHER : "measured_at"
-
-    DIM_CITY ||--o{ FACT_AIR_QUALITY : "monitors"
-    DIM_DATE ||--o{ FACT_AIR_QUALITY : "recorded_at"
-    DIM_TIME ||--o{ FACT_AIR_QUALITY : "measured_at"
-```
-## 📂 Cấu trúc dự án
-```
-ELT Weather/
-├── api/                # FastAPI Service (Weather & AQ Data)
-├── airflow/
-│   ├── dags/               # Chứa các Airflow DAGs (etl_day, etl_year)
-│   ├── elt_app/            # Source code chính của ứng dụng
-│   │   ├── scripts/        # Python scripts cho các bước (extract, transform, load)
-│   │   ├── sql/            # Các câu lệnh SQL (Merge, DDL)
-│   │   └── utils/          # Các hàm tiện ích (Config, Logging...)
-│   ├── Dockerfile.airflow  # Custom image cho Airflow
-│   └── requirements.txt    # Thư viện Python cho Airflow
-├── spark/
-│   ├── conf/               # Cấu hình Spark (spark-defaults.conf)
-│   ├── jars/               # Các thư viện Java/Scala cần thiết (JDBC, AWS...)
-│   └── Dockerfile.spark    # Custom image cho Spark
-├── postgres-init/          # Script khởi tạo database PostgreSQL
-├── docker-compose.yml      # File cấu hình toàn bộ stack
-└── README.md               # Tài liệu dự án
-```
-
-## 🚀 Cài đặt và Chạy dự án
-
-### Tiền đề (Prerequisites)
-- [Docker](https://www.docker.com/) và [Docker Compose](https://docs.docker.com/compose/) đã được cài đặt trên máy.
-- Git.
-
-### Các bước triển khai
-
-1. **Clone repository:**
+### 2. Triển khai Hệ thống
+1. Clone repository:
    ```bash
    git clone <repo_url>
    cd "ELT Weather"
    ```
-
-2. **Cấu hình biến môi trường:**
-   Copy file `.envexample` thành `.env` và cập nhật các thông tin cần thiết:
-   ```env
-   # AWS / S3 Config
-   AWS_ACCESS_KEY_ID=minioadmin
-   AWS_SECRET_ACCESS_KEY=minioadmin
-   AWS_DEFAULT_REGION=us-east-1
-   BUCKET=weather-data
-
-   # Cấu hình Airflow & Database
-   AIRFLOW_UID=50000
-   POSTGRES_USER=airflow
-   POSTGRES_PASSWORD=airflow
-   POSTGRES_DB=weather_dw
-   ```
-
-3. **Tải các thư viện phụ thuộc (JARs)**
-   Dự án sử dụng Spark với các thư viện mở rộng để kết nối S3, PostgreSQL và Delta Lake. Các thư viện này không được lưu trong git để giảm dung lượng.
-   Chạy script sau để tự động tải về:
+2. Thiết lập biến môi trường:
+   Sao chép `.envexample` thành `.env` và cập nhật thông số kết nối Database.
+3. Khởi chạy toàn bộ hệ thống qua Docker Compose:
    ```bash
-   bash setup.sh
+   docker-compose up -d --build
    ```
-   *Script này sẽ tải các file .jar cần thiết vào thư mục `spark/jars/`.*
 
-4. **Khởi chạy hệ thống với Docker Compose:**
-   ```bash
-   docker compose up -d --build
-   ```
-   Lệnh này sẽ build các images (Airflow, Spark) và khởi động các containers:
-   - `postgres`: Database cho Airflow metadata và Data Warehouse.
-   - `airflow-webserver`: Giao diện quản lý Airflow.
-   - `airflow-scheduler`: Bộ lập lịch của Airflow.
-   - `spark-master` & `spark-worker`: Cluster Spark.
+### 3. Vận hành & Quản trị
+- **Airflow UI**: Đăng nhập và theo dõi Pipelines tại `http://localhost:8080` (Mặc định User/Pass do bạn thiết lập).
+- **dbt Documentation**: Xem data lineage và thư viện docs của mô hình:
+  ```bash
+  cd dbt
+  dbt docs generate
+  dbt docs serve
+  ```
 
-5. **Truy cập giao diện quản trị:**
-   - **Airflow UI**: http://localhost:8080 (Tài khoản mặc định: `admin`/`admin` - xem trong `docker-compose.yml` phần `airflow-init`).
-   - **Spark Master UI**: http://localhost:8081.
+---
 
-6. **Cấu hình Connections (Airflow UI):**
-   Vào Airflow UI -> **Admin** -> **Connections** để thiết lập các kết nối:
+## 📊 Business Insights Dashboard (Power BI)
 
-   **a. Kết nối PostgreSQL (Data Warehouse):**
-   *Kết nối này đã được tự động cấu hình qua biến môi trường trong `docker-compose.yml`.*
-   - **Conn Id**: `postgres_default`
-   - **Conn Type**: `Postgres`
-   - **Host**: `postgres-db`
-   - **Schema**: `weather_dw`
-   - **Login**: `airflow`
-   - **Password**: `airflow`
-   - **Port**: `5432`
+Dự án có đi kèm Dashboard được thiết kế trên PowerBI để làm cầu nối giữa Data và Business (`uber_healthy.pbix`):
+- **Bản đồ Rủi ro Sức khỏe**: Hiển thị biến động mức độ ô nhiễm theo từng tỉnh thành.
+- **Biểu đồ Suitability**: Biến động điểm số hoạt động ngoài trời thời gian thực.
+- **Thống kê Cảnh báo**: Trực quan hóa tỷ trọng rủi ro y tế và khuyến nghị được đưa ra.
 
-   **b. Kết nối Spark:**
-   - **Conn Id**: `spark_default`
-   - **Conn Type**: `Generic`
-   - **Host**: `spark://spark-master`
-   - **Port**: `7077`
-   - **Extra**: `{
-      "deploy-mode": "client",
-      "spark-binary": "spark-submit"
-   }`
-
-## 🏃‍♂️ Sử dụng Pipeline
-
-Dự án bao gồm các DAGs chính trong Airflow:
-
-1. **`etl_daily`**: Chạy hàng ngày để lấy dữ liệu thời tiết và AQI hiện tại.
-2. **`etl_yearly`**: (Tùy chọn) Chạy định kỳ để lấy dữ liệu lịch sử hoặc tổng hợp theo năm.
-
-### Luồng xử lý dữ liệu (Workflow):
-
-1. **Extract**: Gọi API thời tiết/AQI, lưu dữ liệu thô (JSON) vào S3 (Data Lake).
-2. **Transform**: Spark đọc dữ liệu từ S3, làm sạch, chuyển đổi cấu trúc và lưu lại dưới dạng Parquet.
-3. **Load**: Load dữ liệu từ Parquet vào PostgreSQL (Data Warehouse) sử dụng cơ chế Merge (Upsert) để tránh trùng lặp.
-
-## 📊 Kết nối với Power BI
-
-File báo cáo `weather.pbix` đã được chuẩn bị sẵn để trực quan hóa dữ liệu từ Data Warehouse. Để xem báo cáo, bạn cần kết nối Power BI với PostgreSQL local.
-
-### Thông tin kết nối (Credentials):
-- **Server:** `localhost`
-- **Port:** `5432`
-- **Database:** `weather_dw`
-- **Username:** `airflow`
-- **Password:** `airflow`
-
-### Hướng dẫn cập nhật nguồn dữ liệu:
-1. Mở file `weather.pbix` bằng Power BI Desktop.
-2. Nếu Power BI yêu cầu cài đặt thêm Driver (Npgsql), hãy tải và cài đặt [Npgsql](https://github.com/npgsql/npgsql/releases) (chọn bản MSI để cài đặt dễ dàng).
-3. Trên thanh công cụ, chọn **File** > **Options and settings** > **Data source settings**.
-4. Chọn nguồn dữ liệu PostgreSQL hiện tại và chọn **Change Source...** (hoặc **Edit Permissions** để sửa user/pass).
-5. Đảm bảo thông tin là `localhost:5432` và `weather_dw`.
-6. Nếu được hỏi Credentials, chọn tab **Database**, nhập Username/Password là `airflow`/`airflow`.
-7. Nhấn **Refresh** để tải dữ liệu mới nhất.
-
-## 🔌 API Service (FastAPI)
-
-Dự án cung cấp một RESTful API (FastAPI) để truy xuất dữ liệu từ Data Warehouse.
-
-### Điểm cuối (Endpoints):
-- **Documented UI (Swagger):** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
-
-### Các API chính:
-- `GET /weather/{city_id}?from_date=YYYY-MM-DD&to_date=YYYY-MM-DD`: Lấy dữ liệu thời tiết theo khoảng thời gian.
-- `GET /air_quality/{city_id}?from_date=YYYY-MM-DD&to_date=YYYY-MM-DD`: Lấy dữ liệu AQI theo khoảng thời gian.
-- `GET /city`: Lấy danh sách thành phố.
-- `GET /city/{id}`: Lấy thông tin thành phố theo ID.
-
-### Cách chạy:
-API service được tích hợp trong Docker Compose. Khi chạy `docker compose up`, service `api` sẽ tự động khởi động tại port `8000`.
-
-## 🛠 Phát triển (Development)
-
-Để chạy thử nghiệm các script Python cục bộ (không qua Docker), bạn cần thiết lập môi trường ảo:
-
-```bash
-# Tạo môi trường ảo
-python -m venv .venv
-source .venv/bin/activate  # Hoặc config .venv\Scripts\activate trên Windows
-
-# Cài đặt thư viện
-pip install -r airflow/requirements.txt
-```
-
-### Chạy thủ công (Ví dụ)
-Nếu muốn chạy một file script cụ thể:
-```bash
-python airflow/elt_app/scripts/extract/weather.py
-```
-*Lưu ý: Cần đảm bảo các biến môi trường được set đúng trong phiên làm việc local.*
+---
 
 ## 📝 Liên hệ
 
-Dự án được thực hiện bởi Trần Văn An. Mọi thắc mắc vui lòng liên hệ qua antran.261004@gmail.com hoặc tạo Issue trên repo này.
+Dự án được thực hiện bởi **Trần Văn An**.  
+Mọi thắc mắc hoặc góp ý vui lòng liên hệ qua email: `antran.261004@gmail.com`.

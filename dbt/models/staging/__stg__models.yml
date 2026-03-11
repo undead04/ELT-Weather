@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: stg_raw_weather_current
+    description: "Lớp Staging cho dữ liệu thời tiết hiện tại (Source: raw_weather_current)."
+    columns:
+      - name: province_id
+        data_type: int
+        tests: [not_null]
+      - name: event_time
+        data_type: timestamp
+        tests: [not_null]
+
+  - name: stg_raw_aq_current
+    description: "Lớp Staging cho dữ liệu chất lượng không khí hiện tại (Source: raw_aq_current)."
+    columns:
+      - name: province_id
+        data_type: int
+        tests: [not_null]
+      - name: event_time
+        data_type: timestamp
+        tests: [not_null]
+
+  - name: stg_raw_weather_forecast
+    description: "Lớp Staging cho dữ liệu dự báo thời tiết (Source: raw_weather_forecast)."
+    columns:
+      - name: province_id
+        data_type: int
+        tests: [not_null]
+      - name: event_time
+        data_type: timestamp
+        tests: [not_null]
+
+  - name: stg_raw_aq_forecast
+    description: "Lớp Staging cho dữ liệu dự báo chất lượng không khí (Source: raw_aq_forecast)."
+    columns:
+      - name: province_id
+        data_type: int
+        tests: [not_null]
+      - name: event_time
+        data_type: timestamp
+        tests: [not_null]

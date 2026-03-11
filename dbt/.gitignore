@@ -1,0 +1,13 @@
+# dbt
+target/
+dbt_packages/
+logs/
+dbt_modules/
+
+# Environment variables
+.env
+
+# Python/Virtualenv
+__pycache__/
+*.pyc
+.venv/

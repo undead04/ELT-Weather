@@ -16,3 +16,5 @@ airflow/webserver_config.py
 airflow/metastore_db
 derby.log
 derby.lck
+.history
+.venv

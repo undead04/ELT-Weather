@@ -1,0 +1,34 @@
+name: "weather_analytics"
+version: "1.0"
+config-version: 2
+
+profile: "weather_analytics"
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+models:
+  weather_analytics:
+    staging:
+      +schema: staging
+      +materialized: table
+    silver:
+      +schema: silver
+      +materialized: table
+    intermediate:
+      +schema: intermediate
+      +materialized: table
+    marts:
+      +schema: marts
+      +materialized: table
+seeds:
+  weather_analytics:
+    dim_locations:
+      +column_types:
+        province_id: integer
+        province_name: varchar
+        admin_center: varchar
+        latitude: float
+        longitude: float
+        region: varchar

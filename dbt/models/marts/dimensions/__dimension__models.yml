@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: "dim_date"
+    description: "Bảng chiều ngày."
+    columns:
+      - name: date_key
+        description: "Khóa chính cho ngày"
+        data_type: int
+        tests:
+          - unique
+          - not_null
+      - name: full_date
+        description: "Ngày đầy đủ"
+        data_type: date
+        tests:
+          - not_null
+      - name: year
+        data_type: int
+        description: "Năm"
+      - name: month
+        data_type: int
+        description: "Tháng"
+      - name: month_name
+        data_type: string
+        description: "Tên tháng"
+
+      - name: day
+        data_type: int
+        description: "Ngày"
+      - name: day_of_week
+        data_type: int
+        description: "Thứ trong tuần"
+      - name: quarter
+        data_type: int
+        description: "Quý"
+      - name: is_weekend
+        data_type: boolean
+        description: "Là cuối tuần"
+
+  - name: "dim_time"
+    description: "Bảng chiều thời gian (phút trong ngày)."
+    columns:
+      - name: time_key
+        description: "Khóa chính cho thời gian (tổng số phút từ đầu ngày)"
+        data_type: int
+        tests:
+          - unique
+          - not_null
+      - name: hour_24h_int
+        description: "Giờ (0-23)"
+        data_type: int
+      - name: minute_int
+        description: "Phút (0-59)"
+        data_type: int
+      - name: time_formatted
+        description: "Định dạng HH:mm"
+        data_type: string
+      - name: period_name
+        description: "Tên buổi (Morning, Noon, Afternoon, Night)"
+        data_type: string

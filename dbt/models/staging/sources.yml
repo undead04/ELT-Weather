@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    database: weather_dw
+    schema: raw
+    tables:
+      - name: raw_weather_current
+        description: "Dữ liệu thời tiết hiện tại thô từ nguồn."
+      - name: raw_weather_forecast
+        description: "Dữ liệu thời tiết dự báo thô từ nguồn."
+      - name: raw_aq_current
+        description: "Dữ liệu chất lượng không khí hiện tại thô."
+      - name: raw_aq_forecast
+        description: "Dữ liệu chất lượng không khí dự báo thô."

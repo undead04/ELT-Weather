@@ -1,0 +1,64 @@
+province_id,province_name,admin_center,latitude,longitude,region
+1,An Giang,Long Xuyên,10.3731,105.4358,Nam
+2,Bà Rịa - Vũng Tàu,Vũng Tàu,10.3460,107.0843,Nam
+3,Bạc Liêu,Bạc Liêu,9.2941,105.7244,Nam
+4,Bắc Giang,Bắc Giang,21.2731,106.1946,Bắc
+5,Bắc Kạn,Bắc Kạn,22.1470,105.8326,Bắc
+6,Bắc Ninh,Bắc Ninh,21.1861,106.0763,Bắc
+7,Bến Tre,Bến Tre,10.2422,106.3752,Nam
+8,Bình Dương,Thủ Dầu Một,10.9804,106.6519,Nam
+9,Bình Định,Quy Nhơn,13.7820,109.2197,Trung
+10,Bình Phước,Đồng Xoài,11.5333,106.8833,Nam
+11,Bình Thuận,Phan Thiết,10.9324,108.1039,Trung
+12,Cà Mau,Cà Mau,9.1769,105.1524,Nam
+13,Cao Bằng,Cao Bằng,22.6666,106.2631,Bắc
+14,Cần Thơ,Ninh Kiều,10.0333,105.7833,Nam
+15,Đà Nẵng,Hải Châu,16.0544,108.2022,Trung
+16,Đắk Lắk,Buôn Ma Thuột,12.6667,108.0500,Tây Nguyên
+17,Đắk Nông,Gia Nghĩa,12.0000,107.6833,Tây Nguyên
+18,Điện Biên,Điện Biên Phủ,21.3833,103.0167,Bắc
+19,Đồng Nai,Biên Hòa,10.9500,106.8167,Nam
+20,Đồng Tháp,Cao Lãnh,10.4500,105.6333,Nam
+21,Gia Lai,Pleiku,13.9833,108.0000,Tây Nguyên
+22,Hà Giang,Hà Giang,22.8333,104.9833,Bắc
+23,Hà Nam,Phủ Lý,20.5333,105.9167,Bắc
+24,Hà Nội,Hoàn Kiếm,21.0285,105.8542,Bắc
+25,Hà Tĩnh,Hà Tĩnh,18.3410,105.9015,Trung
+26,Hải Dương,Hải Dương,20.9410,106.3330,Bắc
+27,Hải Phòng,Hồng Bàng,20.8449,106.6881,Bắc
+28,Hậu Giang,Vị Thanh,9.7844,105.4700,Nam
+29,Hòa Bình,Hòa Bình,20.8172,105.3376,Bắc
+30,Hồ Chí Minh,Quận 1,10.7769,106.7009,Nam
+31,Hưng Yên,Hưng Yên,20.6464,106.0511,Bắc
+32,Khánh Hòa,Nha Trang,12.2451,109.1943,Trung
+33,Kiên Giang,Rạch Giá,10.0125,105.0809,Nam
+34,Kon Tum,Kon Tum,14.3500,108.0000,Tây Nguyên
+35,Lai Châu,Lai Châu,22.3959,103.4759,Bắc
+36,Lạng Sơn,Lạng Sơn,21.8500,106.7500,Bắc
+37,Lào Cai,Lào Cai,22.4833,103.9667,Bắc
+38,Lâm Đồng,Đà Lạt,11.9404,108.4583,Tây Nguyên
+39,Long An,Tân An,10.5333,106.4000,Nam
+40,Nam Định,Nam Định,20.4167,106.1667,Bắc
+41,Nghệ An,Vinh,18.6667,105.6667,Trung
+42,Ninh Bình,Ninh Bình,20.2500,105.9667,Bắc
+43,Ninh Thuận,Phan Rang,11.5667,108.9833,Trung
+44,Phú Thọ,Việt Trì,21.3167,105.4000,Bắc
+45,Phú Yên,Tuy Hòa,13.0833,109.3000,Trung
+46,Quảng Bình,Đồng Hới,17.4833,106.6000,Trung
+47,Quảng Nam,Tam Kỳ,15.5667,108.4833,Trung
+48,Quảng Ngãi,Quảng Ngãi,15.1167,108.8000,Trung
+49,Quảng Ninh,Hạ Long,20.9500,107.0667,Bắc
+50,Quảng Trị,Đông Hà,16.8167,107.1000,Trung
+51,Sóc Trăng,Sóc Trăng,9.6000,105.9667,Nam
+52,Sơn La,Sơn La,21.3167,103.9000,Bắc
+53,Tây Ninh,Tây Ninh,11.3000,106.1000,Nam
+54,Thái Bình,Thái Bình,20.4500,106.3333,Bắc
+55,Thái Nguyên,Thái Nguyên,21.5833,105.8333,Bắc
+56,Thanh Hóa,Thanh Hóa,19.8000,105.7667,Trung
+57,Thừa Thiên Huế,Huế,16.4633,107.5908,Trung
+58,Tiền Giang,Mỹ Tho,10.3500,106.3500,Nam
+59,Trà Vinh,Trà Vinh,9.9333,106.3333,Nam
+60,Tuyên Quang,Tuyên Quang,21.8167,105.2167,Bắc
+61,Vĩnh Long,Vĩnh Long,10.2500,105.9667,Nam
+62,Vĩnh Phúc,Vĩnh Yên,21.3000,105.6000,Bắc
+63,Yên Bái,Yên Bái,21.7000,104.8667,Bắc

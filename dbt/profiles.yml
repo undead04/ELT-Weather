@@ -1,0 +1,12 @@
+weather_analytics:
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      user: postgres
+      password: postgres
+      port: 5432
+      dbname: weather_dw
+      schema: dev # dbt will create its models here or and you can configure others
+      threads: 4
+  target: dev

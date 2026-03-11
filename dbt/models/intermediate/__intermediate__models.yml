@@ -1,0 +1,171 @@
+version: 2
+
+models:
+  - name: "int_medical_alert_actual"
+    description: "Model trung gian xử lý cảnh báo y tế từ dữ liệu thực tế."
+    columns:
+      - name: province_id
+        description: "ID của tỉnh thành"
+        data_type: int
+        tests:
+          - not_null
+      - name: date_key
+        description: "ID của ngày"
+        data_type: int
+        tests:
+          - not_null
+      - name: time_key
+        description: "ID của giờ"
+        data_type: int
+        tests:
+          - not_null
+      - name: alert_type
+        description: "Loại cảnh báo"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Forecast", "Actual"]
+              config:
+                severity: warn
+      - name: risk_type
+        description: "Loại rủi ro"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Respiratory",
+                    "Skin/Eyes",
+                    "Cardiovascular",
+                    "Safety/Accessibility",
+                    "Unknown",
+                  ]
+              config:
+                severity: warn
+      - name: risk_level
+        description: "Mức độ rủi ro"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Extreme", "High", "Moderate"]
+              config:
+                severity: warn
+      - name: recommendation
+        description: "Khuyến nghị"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Mưa rất to, cần hỗ trợ di chuyển đặc biệt.",
+                    "Đeo khẩu trang N95, hạn chế tối đa ra ngoài.",
+                    "Tránh ánh nắng trực tiếp, nguy cơ sốc nhiệt.",
+                    "Nguy cơ sốc nhiệt cao, ưu tiên xe có điều hòa.",
+                    "Nguy cơ hạ thân nhiệt, cần xe ấm.",
+                    "Cân nhắc hoãn lịch khám nếu không cần thiết.",
+                  ]
+              config:
+                severity: warn
+
+      - name: affected_population
+        description: "Dân số bị ảnh hưởng"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Everyone", "Sensitive Groups"]
+              config:
+                severity: warn
+      - name: update_at
+        description: "Thời gian cập nhật cảnh báo"
+        data_type: timestamp
+        tests:
+          - not_null
+  - name: "int_medical_alert_forecast"
+    description: "Model trung gian xử lý cảnh báo y tế từ dữ liệu dự báo."
+    columns:
+      - name: province_id
+        description: "ID của tỉnh thành"
+        data_type: int
+        tests:
+          - not_null
+      - name: date_key
+        description: "ID của ngày"
+        data_type: int
+        tests:
+          - not_null
+      - name: time_key
+        description: "ID của giờ"
+        data_type: int
+        tests:
+          - not_null
+      - name: alert_type
+        description: "Loại cảnh báo"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Forecast", "Actual"]
+              config:
+                severity: warn
+      - name: risk_type
+        description: "Loại rủi ro"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Respiratory",
+                    "Skin/Eyes",
+                    "Cardiovascular",
+                    "Safety/Accessibility",
+                    "Unknown",
+                  ]
+              config:
+                severity: warn
+      - name: risk_level
+        description: "Mức độ rủi ro"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Extreme", "High", "Moderate"]
+              config:
+                severity: warn
+      - name: recommendation
+        description: "Khuyến nghị"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  [
+                    "Mưa rất to, cần hỗ trợ di chuyển đặc biệt.",
+                    "Đeo khẩu trang N95, hạn chế tối đa ra ngoài.",
+                    "Tránh ánh nắng trực tiếp, nguy cơ sốc nhiệt.",
+                    "Nguy cơ sốc nhiệt cao, ưu tiên xe có điều hòa.",
+                    "Nguy cơ hạ thân nhiệt, cần xe ấm.",
+                    "Cân nhắc hoãn lịch khám nếu không cần thiết.",
+                  ]
+              config:
+                severity: warn
+
+      - name: affected_population
+        description: "Dân số bị ảnh hưởng"
+        data_type: string
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["Everyone", "Sensitive Groups"]
+              config:
+                severity: warn
+      - name: update_at
+        description: "Thời gian cập nhật cảnh báo"
+        data_type: timestamp
+        tests:
+          - not_null
