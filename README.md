@@ -53,7 +53,127 @@ Hệ thống cung cấp 3 DAGs (Directed Acyclic Graphs) chính xử lý dữ li
 
 ---
 
-## 📂 Tổ chức mã nguồn (Project Structure)
+## 🌊 Luồng Dữ liệu (Data Flow)
+
+Dưới đây là sơ đồ luồng dữ liệu (Dataflow) bắt đầu từ nguồn API cho đến khi lên bảng Dashboard, và được điều phối bằng Airflow:
+
+```mermaid
+flowchart TD
+    %% Extract
+    subgraph Extract [1. Extract]
+        API(Open-Meteo API)
+        Python[Python ETL Scripts]
+        API --> Python
+    end
+
+    %% Load
+    subgraph Load [2. Load]
+        Raw[(PostgreSQL\nRaw Layer)]
+        Python --> Raw
+    end
+
+    %% Transform
+    subgraph Transform [3. Transform dbt]
+        Staging(Staging Layer)
+        Intermediate(Intermediate Layer\nSilver logic)
+        Marts(Data Marts)
+        Raw --> Staging
+        Staging --> Intermediate
+        Intermediate --> Marts
+    end
+
+    %% Airflow & BI
+    Airflow((Apache Airflow)) -.-> |Schedule & Trigger| Python
+    Airflow -.-> |DbtTaskGroup| Transform
+    
+    subgraph Analytics [4. App/BI]
+        BI[Power BI Dashboard]
+    end
+    
+    Marts --> BI
+```
+
+---
+
+## �️ Mô hình Dữ liệu (Data Marts ERD)
+
+Dưới đây là sơ đồ thực thể liên kết (Entity-Relationship Diagram) thể hiện cấu trúc của các Data Marts và các bảng Dimensions tương ứng trong hệ thống:
+
+```mermaid
+erDiagram
+    dim_date ||--o{ dm_health_daily : "1:N"
+    dim_date ||--o{ dm_activity_plan : "1:N"
+    dim_date ||--o{ dm_medical_alert : "1:N"
+    dim_time ||--o{ dm_activity_plan : "1:N"
+    dim_time ||--o{ dm_medical_alert : "1:N"
+
+    dim_date {
+        int date_key PK
+        date full_date
+        int year
+        int month
+        string month_name
+        int day
+        int day_of_week
+        int quarter
+        boolean is_weekend
+    }
+
+    dim_time {
+        int time_key PK
+        int hour_24h_int
+        int minute_int
+        string time_formatted
+        string period_name
+    }
+
+    dm_health_daily {
+        int province_id
+        int date_key FK
+        string province_name
+        date full_date
+        float max_uv_index
+        float avg_temp_c
+        float avg_humidity
+        float avg_pm2_5
+        float heat_index_max
+        float wind_chill_min
+        float avg_precipitation
+        string aqi_category
+        string main_risk_factor
+        timestamp update_at
+    }
+
+    dm_activity_plan {
+        int province_id
+        string province_name
+        timestamp event_time
+        int date_key FK
+        int time_key FK
+        float suitability_score
+        string advice_text
+        string data_source
+        timestamp update_at
+    }
+
+    dm_medical_alert {
+        int province_id
+        string province_name
+        timestamp event_time
+        int date_key FK
+        int time_key FK
+        string alert_type
+        string risk_type
+        string risk_level
+        string recommendation
+        string affected_population
+        timestamp update_at
+    }
+```
+
+---
+
+## �📂 Tổ chức mã nguồn (Project Structure)
 
 ```
 Uber Healthy/
@@ -99,8 +219,9 @@ Uber Healthy/
   cd dbt
   dbt docs generate
   dbt docs serve
+  dbt seed
+  dbt run
   ```
-
 ---
 
 ## 📊 Business Insights Dashboard (Power BI)
