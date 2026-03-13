@@ -96,7 +96,7 @@ flowchart TD
 ### 1. Luồng hiện tại (Current Flow)
 ![flow_current](flow_current.PNG)
 ### 2. Luồng dự báo (Forecast Flow)
-![flow_forecast](flow_forecast.PNG)
+![flow_forecast](forecast_flow.PNG)
 ### 3. Luồng lịch sử (Historical Flow)
 ![flow_historical](flow_historical.PNG)
 ---
@@ -105,7 +105,7 @@ flowchart TD
 
 Dưới đây là sơ đồ thực thể liên kết (Entity-Relationship Diagram) thể hiện cấu trúc của các Data Marts và các bảng Dimensions tương ứng trong hệ thống:
 
-![ERD](ERD.PNG)
+![ERD](ERD.png)
 
 ---
 
