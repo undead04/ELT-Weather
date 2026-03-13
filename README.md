@@ -92,88 +92,24 @@ flowchart TD
     
     Marts --> BI
 ```
-
+## Flowchart chi tiết về các luồn
+### 1. Luồng hiện tại (Current Flow)
+![flow_current](flow_current.PNG)
+### 2. Luồng dự báo (Forecast Flow)
+![flow_forecast](flow_forecast.PNG)
+### 3. Luồng lịch sử (Historical Flow)
+![flow_historical](flow_historical.PNG)
 ---
 
-## �️ Mô hình Dữ liệu (Data Marts ERD)
+## ️ Mô hình Dữ liệu (Data Marts ERD)
 
 Dưới đây là sơ đồ thực thể liên kết (Entity-Relationship Diagram) thể hiện cấu trúc của các Data Marts và các bảng Dimensions tương ứng trong hệ thống:
 
-```mermaid
-erDiagram
-    dim_date ||--o{ dm_health_daily : "1:N"
-    dim_date ||--o{ dm_activity_plan : "1:N"
-    dim_date ||--o{ dm_medical_alert : "1:N"
-    dim_time ||--o{ dm_activity_plan : "1:N"
-    dim_time ||--o{ dm_medical_alert : "1:N"
-
-    dim_date {
-        int date_key PK
-        date full_date
-        int year
-        int month
-        string month_name
-        int day
-        int day_of_week
-        int quarter
-        boolean is_weekend
-    }
-
-    dim_time {
-        int time_key PK
-        int hour_24h_int
-        int minute_int
-        string time_formatted
-        string period_name
-    }
-
-    dm_health_daily {
-        int province_id
-        int date_key FK
-        string province_name
-        date full_date
-        float max_uv_index
-        float avg_temp_c
-        float avg_humidity
-        float avg_pm2_5
-        float heat_index_max
-        float wind_chill_min
-        float avg_precipitation
-        string aqi_category
-        string main_risk_factor
-        timestamp update_at
-    }
-
-    dm_activity_plan {
-        int province_id
-        string province_name
-        timestamp event_time
-        int date_key FK
-        int time_key FK
-        float suitability_score
-        string advice_text
-        string data_source
-        timestamp update_at
-    }
-
-    dm_medical_alert {
-        int province_id
-        string province_name
-        timestamp event_time
-        int date_key FK
-        int time_key FK
-        string alert_type
-        string risk_type
-        string risk_level
-        string recommendation
-        string affected_population
-        timestamp update_at
-    }
-```
+![ERD](ERD.PNG)
 
 ---
 
-## �📂 Tổ chức mã nguồn (Project Structure)
+## 📂 Tổ chức mã nguồn (Project Structure)
 
 ```
 Uber Healthy/
