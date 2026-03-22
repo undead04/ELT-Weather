@@ -1,14 +1,11 @@
 {{ config(
-    materialized='incremental',
-    unique_key=['province_id','event_time'],
+    materialized='table',
     tags=['forecast_flow'],
     pre_hook=[
       "{{ log_source_freshness(source('raw', 'raw_weather_forecast')) }}",
       "{{ log_raw_record_count('raw', 'raw_weather_forecast', 'insert_time') }}"
     ],
     post_hook=[
-      "{{ log_row_count(this) }}",
-      "{{ log_data_quality(['temperature_2m', 'relative_humidity_2m', 'apparent_temperature', 'uv_index', 'precipitation', 'wind_speed']) }}",
       "{{ log_execution_time(this) }}"  
     ]
 ) }}
@@ -34,8 +31,5 @@ WITH unnested AS (
         r.wind_speed::float[]
     ) AS t(time, temperature_2m, relative_humidity_2m, apparent_temperature, uv_index, precipitation, wind_speed)
     WHERE {{ get_date_filter('t.time::timestamp') }}
-    {% if is_incremental() and not var('is_backfill', false) %}
-      AND r.insert_time > (select coalesce(max(insert_time), '1900-01-01') from {{ this }})
-    {% endif %}
 )
 SELECT * FROM unnested

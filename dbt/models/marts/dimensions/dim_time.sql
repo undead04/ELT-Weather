@@ -1,9 +1,9 @@
 {{ 
   config(
-    materialized = 'table', 
+    materialized = 'incremental', 
+    unique_key = 'time_key',
     tags = ['static_dim'],
     post_hook=[
-      "{{ log_row_count(this) }}",
       "{{ log_execution_time(this) }}"
     ]
   ) 

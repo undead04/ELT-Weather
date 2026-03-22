@@ -1,27 +1,14 @@
 {{
   config(
-    materialized = 'incremental',
+    materialized = 'table',
     unique_key=['province_id', 'date_key', 'time_key'],
-    indexes=[
-        {'columns': ['province_id', 'date_key', 'time_key'], 'unique': True},
-        {'columns': ['date_key']}
-    ],
     post_hook=[
-        "{{ log_row_count(this) }}",
+        "{{ log_row_count(ref('int_weather_aq_current')) }}",
         "{{ log_execution_time(this) }}"
     ],
     tags=['current_flow'],
   )
 }}
--- CHỈ tạo CTE này khi đang ở chế độ incremental
-{% if is_incremental() and not var('is_backfill', false) %}
-    {% set last_update_query %}
-        SELECT COALESCE(MAX(update_at), '1900-01-01') FROM {{ this }}
-    {% endset %}
-    {% set max_val = run_query(last_update_query).columns[0][0] %}
-{% else %}
-    {% set max_val = '1900-01-01'%}
-{% endif %}
 SELECT 
     p.province_id,
     d.date_key,
@@ -72,6 +59,3 @@ WHERE 1 = 1
     OR apparent_temperature <= 0
     OR precipitation > 5
     )
-    {% if is_incremental() and not var('is_backfill', false) %}
-        AND w.update_at > '{{ max_val }}'::timestamp
-    {% endif %}

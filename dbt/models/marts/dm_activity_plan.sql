@@ -1,7 +1,12 @@
 {{
   config(
     materialized='incremental',
-    unique_key=['date_key', 'time_key', 'province_id']
+    tags=['forecast_flow'],
+    unique_key=['date_key', 'time_key', 'province_id'],
+    post_hook=[
+            "{{ log_row_count(ref('int_weather_aq_forecast')) }}",
+      "{{ log_execution_time(this) }}"
+    ]
   )
 }}
 

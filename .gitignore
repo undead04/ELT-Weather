@@ -3,7 +3,7 @@ configs
 logs/
 .env
 .qodo
-
+/dbt/package-lock.yml
 spark/jars/
 __pycache__/
 *.py[cod]

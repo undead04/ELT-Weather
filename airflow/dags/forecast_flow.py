@@ -106,10 +106,10 @@ with DAG(
         render_config=RenderConfig(
             select=["tag:forecast_flow"],
             test_behavior=TestBehavior.AFTER_ALL,
-            dbt_deps=True,
+            dbt_deps=False,
         ),
         operator_args={
-            "install_deps": True,
+            "install_deps": False,
             "full_refresh": False,
             "vars": {
                 # Cộng timedelta xong mới .strftime()

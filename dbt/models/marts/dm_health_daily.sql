@@ -8,7 +8,7 @@
       {'columns': ['date_key']}
     ],
     post_hook=[
-      "{{ log_row_count(this) }}",
+      "{{ log_row_count(ref('int_weather_aq_current')) }}",
       "{{ log_aggregation_summary('province_id', 'avg_temp_c') }}",
       "{{ log_aggregation_summary('province_id', 'avg_pm2_5') }}",
       "{{ log_execution_time(this) }}"
@@ -33,9 +33,9 @@ WITH DailyAgg AS (
         d.full_date,
         MAX(w.uv_index) as max_uv_index,
         AVG(w.pm2_5) as avg_pm2_5,
-        MAX(w.heat_index) as heat_index_max,
+        COALESCE(MAX(w.heat_index), 0) as heat_index_max,
         AVG(w.precipitation) as avg_precipitation,
-        MIN(w.wind_chill) as wind_chill_min,
+        COALESCE(MIN(w.wind_chill), 0) as wind_chill_min,
         AVG(w.temperature_2m) as avg_temp_c,
         AVG(w.relative_humidity_2m) as avg_humidity
     FROM {{ ref('int_weather_aq_current') }} w
