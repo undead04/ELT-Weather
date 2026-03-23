@@ -48,7 +48,7 @@ SELECT
             + 0.00221173 * POWER(w.temperature_2m, 2) * w.relative_humidity_2m 
             + 0.00072546 * w.temperature_2m * POWER(w.relative_humidity_2m, 2) 
             - 0.00000358 * POWER(w.temperature_2m, 2) * POWER(w.relative_humidity_2m, 2)
-        ELSE NULL                
+        ELSE 0                
     END AS heat_index,
 
     CASE
@@ -56,7 +56,7 @@ SELECT
             13.12 + (0.6215 * w.temperature_2m) 
             - (11.37 * POWER(w.wind_speed, 0.16)) 
             + (0.3965 * w.temperature_2m * POWER(w.wind_speed, 0.16))
-        ELSE NULL
+        ELSE 0
     END AS wind_chill,
     w.insert_time,
     current_timestamp AS update_at

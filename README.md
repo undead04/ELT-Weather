@@ -107,7 +107,7 @@ flowchart TD
 
 ### 2. Luồng dự báo (Forecast Flow)
 
-![flow_forecast](forecast_flow.PNG)
+![alt text](image.png)
 
 ### 3. Luồng lịch sử (Historical Flow)
 
